@@ -46,6 +46,12 @@
                         @if (!Auth::guest())
                             <li><a href="{{ route('posts.create') }}">New Article</a></li>
                         @endif
+                        @if (!Auth::guest())
+                            <li><a href="{{ url('/permissions') }}">Permissions</a></li>
+                        @endif
+                        @if (!Auth::guest())
+                            <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

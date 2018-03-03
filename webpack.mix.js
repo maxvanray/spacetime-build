@@ -601,21 +601,10 @@ var paths = {
 /*
 
 //sass compilation
-mix.sass('node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss', destCss + 'bootstrap.css');
-mix.sass('node_modules/bootstrap-sass/assets/stylesheets/_buttons.scss', destCss + 'buttons_sass.css').options({
-    processCssUrls: false
-}); 
 
-
-mix.sass(resourcesAssets + 'sass/bootstrap/bootstrap.scss', destCss + 'bootstrap.css').options({
-    processCssUrls: false
-});
-mix.sass(resourcesAssets + 'sass/buttons/buttons.scss', destCss + 'buttons_sass.css').options({
-    processCssUrls: false
-}); 
-
-mix.sass(resourcesAssets + 'sass/custom.scss', destCss + 'custom.css');
 */
+mix.sass(resourcesAssets + 'sass/dashboard.scss', destCss + 'dashboard.css');
+
 
 mix.sass(resourcesAssets + 'sass/spacetime.scss', destCss + 'spacetime.css');
 
