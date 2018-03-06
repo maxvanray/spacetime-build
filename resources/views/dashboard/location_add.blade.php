@@ -655,7 +655,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-success col-md-4" type="submit">Add</button>
+        <button class="btn btn-success col-md-4" type="submit">Location Create</button>
     </div>
 </div>
 

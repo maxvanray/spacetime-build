@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use App\UserAttribute;
 
 class User extends Authenticatable
 {
@@ -33,4 +34,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the attributes record associated with the user.
+     */
+    public function attributes()
+    {
+
+        return $this->hasOne('App\UserAttribute');
+    }
 }
+

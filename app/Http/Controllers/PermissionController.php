@@ -111,7 +111,7 @@ class PermissionController extends Controller {
         $input = $request->all();
         $permission->fill($input)->save();
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('users.show')
             ->with('flash_message',
                 'Permission'. $permission->name.' updated!');
 

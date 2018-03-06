@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\UserAttribute;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -93,6 +94,19 @@ class UserController extends Controller
         return date('Y-m-d H:i:s', $a);
     }
 
+    public function attributes(Request $request, $id)
+    {
+        $user_attributes = UserAttribute::findOrFail($id);
+        $input = $request->all();
+        $name = $input['name'];
+        $value = $input['value'];
+
+        $user_attributes->$name = $value;
+        $user_attributes->save();
+
+        return response('success', 201);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -149,7 +163,11 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('dashboard.user_show', compact('user'));
+        $user_attributes = User::find($id)->attributes;
+        //return $user_attributes;
+        return view('dashboard.user_show',
+            compact('user'), compact('user_attributes')
+        );
     }
 
     /**
@@ -174,6 +192,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->name == 'email'){
+            $validatedData = $request->validate([
+                'value' => 'email|unique:users,email|max:190'
+            ]);
+        }else{
+            $validatedData = $request->validate([
+                'value' => 'max:190'
+            ]);
+        }
+
+
         $user = User::find($id);
         $name = $request->get('name');
         $value = $request->get('value');

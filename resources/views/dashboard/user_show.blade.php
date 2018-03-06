@@ -86,30 +86,17 @@
                     <table id="user" class="table table-bordered table-striped m-t-10">
                         <tbody>
                         <tr>
-                            <td class="table_simple">First Name:</td>
+                            <td class="table_simple">User Name:</td>
                             <td class="table_superuser">
                                 <a 
                                 href="#" 
-                                id="first_name"
+                                id="name"
                                 class="editable editable-click"
-                                name="name" 
+                                name="name"
                                 data-type="text" 
                                 data-url="{{route('user.update', ['id'=>$user->id])}}"
                                 data-pk="{{ $user->id }}"
-                                data-title="Enter User First Name">{{ $user->first_name or "<None>" }}</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="table_simple">Last Name:</td>
-                            <td class="table_superuser">
-                                <a href="#" 
-                                    id="last_name" 
-                                    class="editable editable-click"
-                                    name="address" 
-                                    data-type="text" 
-                                    data-url="{{route('user.update', ['id'=>$user->id])}}"
-                                    data-pk="{{ $user->id }}"
-                                    data-title="Enter User Last Name">{{ $user->last_name or "<None>" }}</a>
+                                data-title="Enter User Name">{{ $user->name or "<None>" }}</a>
                             </td>
                         </tr>
 
@@ -150,9 +137,9 @@
                                     class="editable editable-click"
                                     name="phone" 
                                     data-type="text" 
-                                    data-url="{{route('user.update', ['id'=>$user->id])}}"
-                                    data-pk="{{ $user->id }}"
-                                    data-title="Enter a Phone Number">{{ $user->phone or "<None>" }}</a>
+                                    data-url="{{route('userattributes.update', ['id'=>$user_attributes->id])}}"
+                                    data-pk="{{ $user_attributes->id }}"
+                                    data-title="Enter a Phone Number">{{ $user_attributes->phone or "<None>" }}</a>
                             </td>
                         </tr>
                         <tr>
@@ -163,9 +150,9 @@
                                     class="editable editable-click"
                                     name="address" 
                                     data-type="text" 
-                                    data-url="{{route('user.update', ['id'=>$user->id])}}"
-                                    data-pk="{{ $user->id }}"
-                                    data-title="Enter a street Address.">{{ $user->address or "<None>" }}</a>
+                                    data-url="{{route('userattributes.update', ['id'=>$user_attributes->id])}}"
+                                    data-pk="{{ $user_attributes->id }}"
+                                    data-title="Enter a street Address.">{{ $user_attributes->address or "<None>" }}</a>
                             </td>
                         </tr>
                         <tr>
@@ -176,9 +163,9 @@
                                     class="editable editable-click"
                                     name="city" 
                                     data-type="text" 
-                                    data-url="{{route('user.update', ['id'=>$user->id])}}"
-                                    data-pk="{{ $user->id }}"
-                                    data-title="Start typing City.">{{ $user->city or "<None>" }}</a>
+                                    data-url="{{route('userattributes.update', ['id'=>$user_attributes->id])}}"
+                                    data-pk="{{ $user_attributes->id }}"
+                                    data-title="Start typing City.">{{ $user_attributes->city or "<None>" }}</a>
                             </td>
                         </tr>
                         <tr>
@@ -189,9 +176,9 @@
                                     class="editable editable-click"
                                     name="state" 
                                     data-type="typeaheadjs" 
-                                    data-url="{{route('user.update', ['id'=>$user->id])}}"
-                                    data-pk="{{ $user->id }}"
-                                    data-title="Start typing State.">{{ $user->state or "<None>" }}</a>
+                                    data-url="{{route('userattributes.update', ['id'=>$user_attributes->id])}}"
+                                    data-pk="{{ $user_attributes->id }}"
+                                    data-title="Start typing State.">{{ $user_attributes->state or "<None>" }}</a>
                             </td>
                         </tr>
                         <tr>
@@ -202,9 +189,9 @@
                                     class="editable editable-click"
                                     name="zip" 
                                     data-type="text" 
-                                    data-url="{{route('user.update', ['id'=>$user->id])}}"
-                                    data-pk="{{ $user->id }}"
-                                    data-title="Enter User Zipcode">{{ $user->zip or "<None>" }}</a>
+                                    data-url="{{route('userattributes.update', ['id'=>$user_attributes->id])}}"
+                                    data-pk="{{ $user_attributes->id }}"
+                                    data-title="Enter User Zipcode">{{ $user_attributes->zip or "<None>" }}</a>
                             </td>
                         </tr>
                     
@@ -224,27 +211,16 @@
 
 {{-- page level scripts --}}
     @section('footer_scripts')
-<!-- begining of page level js -->
-<!-- <script type="text/javascript"  src="{{asset('assets/vendors/jquery-mockjax/js/jquery.mockjax.js')}}"></script> -->
 <script type="text/javascript"  src="{{asset('assets/vendors/moment/js/moment.min.js')}}"></script>
 <script type="text/javascript"  src="{{asset('assets/vendors/x-editable/js/bootstrap-editable.js')}}"></script>
 <script type="text/javascript"  src="{{asset('assets/vendors/x-editable/js/typeahead.js')}}"></script>
 <script type="text/javascript"  src="{{asset('assets/vendors/x-editable/js/typeaheadjs.js')}}"></script>
 <script type="text/javascript"  src="{{asset('assets/vendors/x-editable/js/address.js')}}"></script>
-
-
-<!-- end of page level js -->
-
-<!-- begining of page level js -->
 <script type="text/javascript" src="{{asset('assets/vendors/editable-table/js/mindmup-editabletable.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/vendors/bootstrap-table/js/bootstrap-table.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/vendors/tableExport/tableExport.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/custom_js/bootstrap_tables.js')}}"></script>
-
-<!-- end of page level js -->
-
 <script type="text/javascript" src="{{asset('assets/js/user-update.js')}}"></script>
-
 <script type="text/javascript">
     $(document).ready(function() {
         

@@ -26,7 +26,8 @@ Route::group([
 
     // User
     Route::resource('user', 'UserController');
-    Route::post('user/{id}', ['as' => 'user.update', 'uses' => 'UserController@update']);
+    Route::post('user/{id}', 'UserController@update')->name('user.update');
+    Route::post('user-attributes/{id}', 'UserController@attributes')->name('userattributes.update');
     Route::get('/guests', 'UserController@guests')->name('guests');
     Route::get('/staff', 'UserController@staff')->name('staff');
     Route::get('/add-user', 'UserController@addUser')->name('adduser');
