@@ -18,5 +18,10 @@ class UserAttribute extends Model
         'preferred_contact_method'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 
 }

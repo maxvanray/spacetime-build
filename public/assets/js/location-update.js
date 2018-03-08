@@ -61,17 +61,14 @@ $(function(){
     // EDITABLE FIELDS
     $('#name').editable({
         type: 'text',
-        name: 'name',
         title: 'Enter Location Name'
     });
     $('#address').editable({
         type: 'text',
-        name: 'address',
         title: 'Enter Location Address'
     });
     $('#city').editable({
         type: 'text',
-        name: 'city',
         title: 'Enter Location City'
     });
     $('#state').editable({
@@ -82,12 +79,10 @@ $(function(){
     });
     $('#zip').editable({
         type: 'text',
-        name: 'address',
         title: 'Enter Address'
     });
     $('#floor').editable({
         type: 'text',
-        name: 'address',
         title: 'Enter Address'
     });
     $('#contact').editable({

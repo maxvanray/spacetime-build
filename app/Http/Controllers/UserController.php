@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\UserAttribute;
 use Auth;
-
 //Importing laravel-permission models
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
 
 //Enables us to output flash messaging
 use Session;
@@ -18,6 +19,7 @@ class UserController extends Controller {
 
     public function __construct() {
         $this->middleware(['auth', 'isAdmin']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
+
     }
 
     /**
@@ -57,11 +59,11 @@ class UserController extends Controller {
         ]);
 
         $user = User::create($request->only('email', 'name', 'password')); //Retrieving only the email and password data
+        $user_attributes = UserAttribute::create('user_id', '=', $user_id);
 
         $roles = $request['roles']; //Retrieving the roles field
         //Checking if a role was selected
         if (isset($roles)) {
-
             foreach ($roles as $role) {
                 $role_r = Role::where('id', '=', $role)->firstOrFail();
                 $user->assignRole($role_r); //Assigning role to user

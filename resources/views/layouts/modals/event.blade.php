@@ -10,20 +10,23 @@
                 </h4>
             </div>
             <div class="modal-body">
-
+<div class="row">
                 <div class="form-group">
-                  <label class="col-md-12 control-label" for="name">Event Name</label>  
-                  <div class="col-md-12">
-                  <input id="name" class="form-control input-md" name="name" type="text" placeholder="Event Name" >
-                  </div>
+                    <div class="col-md-12">
+                        <label class="col-md-12 control-label" for="name">Event Name
+                            <input id="name" class="form-control input-md" name="name" type="text" placeholder="Event Name" >
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-12 control-label" for="description">Description</label>
-                  <div class="col-md-12">                     
-                    <textarea id="description" class="form-control" name="description" placeholder="Event Description"></textarea>
+                    <div class="col-md-12">
+                        <label class="col-md-12 control-label" for="description">Description
+                        <textarea id="description" class="form-control" name="description" placeholder="Event Description"></textarea>
+                    </label>
                   </div>
                 </div>
+</div>
 
             </div><!-- /.modal-body -->
             <div class="modal-footer">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Calendar;
 use App\Event;
+use App\Location;
 use App\User;
 use Auth;
 
@@ -20,7 +21,6 @@ class EventController extends Controller
     {
         $user = Auth::user();
         $events = Event::all();
-
         return view('dashboard/calendar', [
             'user' => $user, 
             'events' => $events
@@ -51,7 +51,14 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $events = Event::all();
+        $locations = Location::all();
+        return view('dashboard/events_add', [
+            'user' => $user,
+            'events' => $events,
+            'locations' => $locations
+        ]);
     }
 
     /**
@@ -62,15 +69,16 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $event = new Event;
+        $this->validate($request, [
+            'name'=>'required|max:100',
+            'type'=>'required'
+        ]);
 
-        $event->name = $request->name;
-        $event->description = $request->description;
-        $event->type = 1;
-        $event->facilitator = 1;
-        $event->save();
-
-        return response()->json(['success'=>'A new event has been created.']);
+        $event = Event::create($request->all());
+        if($request->ajax()){
+            return response()->json(['success'=>'A new event has been created.']);
+        }
+        return redirect()->route('events');
     }
 
     /**
@@ -84,7 +92,6 @@ class EventController extends Controller
         $calendar = Calendar::where('event_id', '=', $id)->get();
         $event = Event::find($id);
         $user = Auth::user();
-
         return view('dashboard/events_show', [
             'calendar' => $calendar,
             'user' => $user, 

@@ -97,8 +97,8 @@
                     </ul>
                 </li>
 
-                <?php // CALENDAR ?>
-                <li {!! ($routename===('calendar.location')||$routename===('calendar')||$routename===('events')? 'class="active"':"") !!}>
+                <?php  // CALENDAR ?>
+                <li {!! ($routename===('events.create')||$routename===('calendar.location')||$routename===('calendar')||$routename===('events')? 'class="active"':"") !!}>
                     <a href="#">
                         <i class="menu-icon fa fa-fw fa-calendar"></i>
                         <span>Scheduling  Events</span> <span
@@ -125,6 +125,11 @@
                         <li {!! ($routename===('events')? 'class="active"':"") !!}>
                             <a href="{{ @route('events') }} ">
                                 <i class="fa fa-list" aria-hidden="true"></i> Event List
+                            </a>
+                        </li>
+                        <li {!! ($routename===('events.create')? 'class="active"':"") !!}>
+                            <a href="{{ @route('events.create') }} ">
+                                <i class="fa fa-list" aria-hidden="true"></i> Create Event
                             </a>
                         </li>
                     </ul>

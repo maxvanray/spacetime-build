@@ -56,7 +56,7 @@
 
         <ol class="breadcrumb">
             <li>
-                <a href="index">
+                <a href="{{route('dashboard')}}">
                     <i class="fa fa-fw fa-home"></i> Dashboard
                 </a>
             </li>

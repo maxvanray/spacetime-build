@@ -107,7 +107,6 @@ class UserController extends Controller
         return response('success', 201);
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -162,11 +161,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::where('id', '=', $id)->first();
+//        $user['attributes'] = User::find($id)->attributes;
         $user_attributes = User::find($id)->attributes;
-        //return $user_attributes;
+
+        //return $user;
         return view('dashboard.user_show',
-            compact('user'), compact('user_attributes')
+            compact('user'),
+            compact('user_attributes')
         );
     }
 

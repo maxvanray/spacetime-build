@@ -66,12 +66,12 @@ class CreateLocationsTable extends Migration
 
             $table->string('images')->nullable();
 
-            $table->integer('created_by')->unsigned();
+            $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')->on('users');
 
             $table->integer('active')->default(1);
 
-            $table->integer('last_edited_by')->unsigned();
+            $table->integer('last_edited_by')->unsigned()->nullable();
             $table->foreign('last_edited_by')->references('id')->on('users');
 
             $table->timestamps();
@@ -85,6 +85,8 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('locations');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

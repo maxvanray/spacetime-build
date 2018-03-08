@@ -21,7 +21,7 @@
         <h1>Event List</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="index">
+                <a href="{{route('dashboard')}}">
                     <i class="fa fa-fw fa-home"></i> Dashboard
                 </a>
             </li>
@@ -40,8 +40,15 @@
                 <div class="panel">
                 
                     <div class="panel-body">
-                        <strong>Event Name:</strong> {{$event->name}}<br>
-                        <strong>Description:</strong> {{$event->description}}<br>
+                        <div class="row">
+                            <div class="col-md-6"><strong>Event Name:</strong></div>
+                            <div class="col-md-6">{{$event->name}}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6"><strong>Description:</strong></div>
+                            <div class="col-md-6">{{$event->description}}</div>
+                        </div>
                         <hr>
                         <h6>Calendar Instances:</h6>
                         <hr>

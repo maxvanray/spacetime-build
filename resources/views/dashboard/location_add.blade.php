@@ -42,7 +42,7 @@
         </h1>
         <ol class="breadcrumb">
             <li>
-                <a href="index">
+                <a href="{{route('dashboard')}}">
                     <i class="fa fa-fw fa-home"></i> Dashboard
                 </a>
             </li>
@@ -580,84 +580,10 @@
     </div>
 </div>
 
-<?php /*
-<!-- Upload Images -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <i class="fa fa-fw fa-upload"></i> Upload Location Images
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>
-                            A picture says a thousand words.<br>Upload multiple pictures of this location.
-                        </h4>
-                        <form id="fileupload" method="POST" enctype="multipart/form-data">
-                            <!-- Redirect browsers with JavaScript disabled to the origin page -->
-                            <noscript>
-                                <input type="hidden" name="redirect" value="">
-                            </noscript>
-                            <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-                            <div class="fileupload-buttonbar">
-                                <div class="col-lg-7">
-                                    <!-- The fileinput-button span is used to style the file input field as button -->
-                                    <span class="btn btn-success fileinput-button">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                        <span>Add files</span>
-                                        <input type="file" name="files[]" multiple>
-                                        </span>
-                                    <button type="submit" class="btn btn-primary start">
-                                        <i class="glyphicon glyphicon-upload"></i>
-                                        <span>Start upload</span>
-                                    </button>
-                                    <button type="reset" class="btn btn-warning cancel">
-                                        <i class="glyphicon glyphicon-ban-circle"></i>
-                                        <span>Cancel upload</span>
-                                    </button>
-                                    <button type="button" class="btn btn-danger delete">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                        <span>Delete</span>
-                                    </button>
-                                    <input type="checkbox" class="toggle">
-                                    <!-- The global file processing state -->
-                                    <span class="fileupload-process"></span>
-                                </div>
-                                <!-- The global progress state -->
-                                <div class="col-lg-5 fileupload-progress fade">
-                                    <!-- The global progress bar -->
-                                    <div class="progress progress-striped active" role="progressbar"
-                                         aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar progress-bar-success"
-                                             style="width:0%;"></div>
-                                    </div>
-                                    <!-- The extended global progress state -->
-                                    <div class="progress-extended">&nbsp;</div>
-                                </div>
-                            </div>
-                            <!-- The table listing the files available for upload/download -->
-                            <div class="table-responsive">
-                                <table role="presentation" class="table table-striped">
-                                    <tbody class="files"></tbody>
-                                </table>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-*/ ?>
 
-<div class="row">
-    <div class="col-md-12">
-        <button class="btn btn-success col-md-4" type="submit">Location Create</button>
-    </div>
-</div>
+{{ Form::submit('Create Location', array('class' => 'btn btn-primary')) }}
+
+
 
 </form>
 

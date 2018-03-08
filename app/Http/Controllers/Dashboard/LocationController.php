@@ -174,15 +174,14 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Location $location)
     {
-
-        $location = Location::find($id);
         $name = $request->get('name');
         $value = $request->get('value');
-        $location->name = $value;
+        $location->created_by = '';
+        $location->created_by = Auth::id();
+        $location->$name = $value;
         $location->save();
-
         return $value;
 
 
@@ -351,7 +350,7 @@ class LocationController extends Controller
                         //->with('success','Location deleted successfully');
     }
 
-    public function media(Request $request, $id)
+    public function media(Request $request, Location $location)
     {
         $images_submitted = $request->input();
         $image_ids = '';
@@ -359,13 +358,10 @@ class LocationController extends Controller
             $image_ids .= ','.$v;
         }
         $image_ids = trim($image_ids, ',');
-        $location = Location::find($id);
         $location->images = $image_ids;
         $location->save();
 
         return $location;
-
-
     }
 
 }

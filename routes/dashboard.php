@@ -54,17 +54,18 @@ Route::group([
 
     //Events
     Route::get('/events', 'EventController@events')->name('events');
+    Route::get('/events/create', 'EventController@create')->name('events.create');
     Route::get('/events/{id}', 'EventController@show');
-    Route::post('/events', 'EventController@store');
+    Route::post('/events', 'EventController@store')->name('events.store');
 
     // Event
     //Route::resource('/location', 'LocationController');
 
     // Location
     Route::resource('/location', 'LocationController');
-    Route::post('location/{id}', ['as' => 'location.update', 'uses' => 'LocationController@update']);
-    Route::post('location/schedule/{id}', ['as' => 'location.updateschedule', 'uses' => 'LocationController@updateLocationTime']);
-    Route::post('/location/media', 'LocationController@media');
+    Route::post('location/{id}', 'LocationController@update')->name('location.update');
+    Route::post('location/schedule/{id}', 'LocationController@updateLocationTime')->name('location.updateschedule');
+    Route::post('/location/{location}/media', 'LocationController@media');
 
     //Route::resource('/location', 'LocationController@index')->name('location');
     //Route::get('/add-location', 'LocationController@index')->name('add-location');

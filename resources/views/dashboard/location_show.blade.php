@@ -58,12 +58,12 @@
 
         <ol class="breadcrumb">
             <li>
-                <a href="index">
+                <a href="{{route('dashboard')}}">
                     <i class="fa fa-fw fa-home"></i> Dashboard
                 </a>
             </li>
             <li>
-                <a href="{{ @route('location.index') }}"> Location</a>
+                <a href="{{route('location.index')}}"> Location</a>
             </li>
             <li class="active">
                 Update Location
@@ -200,27 +200,34 @@
                                                     <div class="modal-body">
                                                         <div class="row">
 
-                                                        @foreach($media as $m)
+                                                        @if(count($media)<1)
                                                             <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label>
-                                                                        <input type="checkbox" name="image_{{$m->id}}" value="{{$m->id}}"
-                                                                               <?php
-                                                                                    $media_id = $m->id;
-                                                                               ?>
-                                                                               @if( in_array($media_id, $used_images) )
-                                                                               checked
-                                                                               @endif
-                                                                        > {{$m->name}}
-                                                                    </label>
+                                                                <h3>No Media</h3>
+                                                            </div>
+                                                        @else
+                                                            @foreach($media as $m)
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label>
+                                                                            <input type="checkbox" name="image_{{$m->id}}" value="{{$m->id}}"
+                                                                                   <?php
+                                                                                   $media_id = $m->id;
+                                                                                   ?>
+                                                                                   @if( in_array($media_id, $used_images) )
+                                                                                   checked
+                                                                                    @endif
+                                                                            > {{$m->name}}
+                                                                        </label>
 
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <img class="img-responsive" src="{{url($m->location)}}/{{ $m->filename }}" class="img-responsive" style="padding: 5px" title="{{ $m->name }}">
-                                                            </div>
-                                                        @endforeach
+                                                                <div class="col-md-6">
+                                                                    <img class="img-responsive" src="{{url($m->location)}}/{{ $m->filename }}" class="img-responsive" style="padding: 5px" title="{{ $m->name }}">
+                                                                </div>
+                                                            @endforeach
 
+
+                                                        @endif
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -231,6 +238,7 @@
                                                         <br>
                                                         <a href="{{route('media.create')}}" class="btn btn-danger">New</a>
                                                     </div>
+
                                                 </form>
                                         </div>
                                     </div>
@@ -315,7 +323,6 @@
                                 data-title="Enter Business Description">{{ $location->description or "<None>" }}</a>
                         </td>
                     </tr>
-                    
 
                     </tbody>
                 </table>

@@ -18,7 +18,7 @@
         <h1>Dashboard</h1>
         <ol class="breadcrumb">
             <li class="active">
-                <a href="index">
+                <a href="{{route('dashboard')}}">
                     <i class="fa fa-fw fa-home"></i> Dashboard
                 </a>
             </li>

@@ -20,7 +20,7 @@ class CreateEventsTable extends Migration
             $table->string('background_color')->nullable();
             $table->string('type')->nullable();
             $table->decimal('price')->nullable();
-            $table->integer('facilitator')->unsigned();
+            $table->integer('facilitator')->unsigned()->nullable();
             $table->foreign('facilitator')->references('id')->on('users');
             $table->timestamps();
         });
