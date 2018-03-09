@@ -70,8 +70,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:100',
-            'type'=>'required'
+            'name'=>'required|max:100'
         ]);
 
         $event = Event::create($request->all());

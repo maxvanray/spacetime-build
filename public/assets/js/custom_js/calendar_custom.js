@@ -340,8 +340,8 @@ $(document).ready(function () {
         e.preventDefault();
         //Get values and make sure event title it is not null
         var val = $("#name").val();
-        var description = $("#new-event-description").val();
-        var type = $('#color-chooser-btn').text().trim();
+        var description = $("#description").val();
+        var type = $('#type').val();
         if (val.length == 0) {
             return;
         }
@@ -365,7 +365,8 @@ $(document).ready(function () {
             url: '/dashboard/events',
             data: {name: val, description: description, type: type},
             success: function (data) {
-                alert(data.success);
+                //alert(data.success);
+                location.reload();
             }
         });
 

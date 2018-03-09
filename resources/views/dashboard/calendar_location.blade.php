@@ -87,8 +87,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#myModal">Create
-                            event</a>
+                        <a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#myModal">Create event</a>
                     </div>
                 </div>
                 <!-- /.box -->

@@ -85,7 +85,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-        {{ Form::select('type', ['1' => 'Group 1', '2' => 'Group 2', '3' => 'Group 3', '4' => 'Group 4', '5' => 'Group 5'], 'S', array('class' => 'form-control')) }}
+        {{ Form::select('type', ['1' => 'Group 1', '2' => 'Group 2', '3' => 'Group 3', '4' => 'Group 4', '5' => 'Group 5'], 'Group 1', array('class' => 'form-control')) }}
 
             </div>
         </div>
