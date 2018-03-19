@@ -150,8 +150,7 @@ var paths = {
 //paths end
 
 // Copy start
-
-    // Copy fonts straight to public
+    // FONTS
     mix.copy(paths.bootstrap + 'fonts', destFonts);
     mix.copy(paths.bootstrap + 'fonts/glyphicons-halflings-regular.ttf', destFonts + 'bootstrap');
     mix.copy(paths.bootstrap + 'fonts/glyphicons-halflings-regular.woff', destFonts + 'bootstrap');
@@ -598,36 +597,31 @@ var paths = {
     mix.copy(paths.wow + 'wow.min.js', destVendors + 'wow/js');
 // Copy end
 
-/*
 
-//sass compilation
 
-*/
+
+//SASS COMPILATION
 mix.sass(resourcesAssets + 'sass/dashboard.scss', destCss + 'dashboard.css');
-
-
 mix.sass(resourcesAssets + 'sass/spacetime.scss', destCss + 'spacetime.css');
+mix.sass(resourcesAssets + 'sass/styles.scss', destCss + 'styles.css'); // <---Tenant Styles
 
-
-// Custom Styles
-//black color scheme
 mix.combine(
-    [
-        paths.bootstrap + 'css/bootstrap.min.css',
-        paths.fontawesome + 'css/font-awesome.min.css',
-        paths.metisMenu + 'metisMenu.css'
-    ], destCss + 'app.css');
+[
+    paths.bootstrap + 'css/bootstrap.min.css',
+    paths.fontawesome + 'css/font-awesome.css',
+    paths.metisMenu + 'metisMenu.css'
+], destCss + 'app.css');
 
 
 // all global js files into app.js
 mix.combine(
-    [
-        paths.jquery + 'jquery.min.js',
-        paths.jqueryui + 'jquery-ui.min.js',
-        paths.bootstrap + 'js/bootstrap.min.js',
-        'resources/assets/js/custom_js/leftmenu.js',
-        paths.metisMenu + 'metisMenu.js',
-        'resources/assets/js/custom_js/rightside_bar.js',
-        paths.holderjs + 'holder.js'
-    ], destJs + 'app.js');
+[
+    paths.jquery + 'jquery.min.js',
+    paths.jqueryui + 'jquery-ui.min.js',
+    paths.bootstrap + 'js/bootstrap.min.js',
+    'resources/assets/js/custom_js/leftmenu.js',
+    paths.metisMenu + 'metisMenu.js',
+    'resources/assets/js/custom_js/rightside_bar.js',
+    paths.holderjs + 'holder.js'
+], destJs + 'app.js');
 

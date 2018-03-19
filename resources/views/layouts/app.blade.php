@@ -11,7 +11,9 @@
     <title>{{ config('app.name', 'SpaceTime') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
+    @yield('header_styles')
 
     <script>
         window.Laravel = {!! json_encode([
@@ -52,6 +54,25 @@
                         @if (!Auth::guest())
                             <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                         @endif
+
+                        @if (!empty($calendar_locations))
+                            @foreach($calendar_locations as $cal_loc)
+                                <li>
+                                    <?php
+                                    /* if( $routeparams['location_id']==$cal_loc->id ){
+                                         echo '<li class="active" >';
+                                     }else{
+                                         echo '<li>';
+                                     } */
+                                    ?>
+
+                                    <a href="{{ @route('calendar.show', $cal_loc->id) }}">
+                                        <i class="fa fa-calendar-o" aria-hidden="true"></i> {{$cal_loc->name}}
+                                    </a>
+                                </li>
+                            @endforeach
+                        @endif
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -101,9 +122,13 @@
         </div>
 
         @yield('content')
+
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+        @yield('footer_scripts')
+
 </body>
 </html>

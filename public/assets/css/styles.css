@@ -1,0 +1,10 @@
+.calendar .instance:hover {
+  background-color: #586872;
+  color: #ffffff;
+  cursor: arrow;
+}
+
+h3 {
+  color: red !important;
+}
+

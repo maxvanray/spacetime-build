@@ -19,4 +19,5 @@ class Calendar extends Model
         'price',
         'created_by'
     ];
+
 }

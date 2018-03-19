@@ -51,7 +51,7 @@
                             @foreach($events as $event)
 
                             <div data-event-id='{{ $event->id }}' class='external-event 
-                            <?php 
+                            @php
                             switch($event->type){
                                 case '1 - primary': 
                                 case'1':
@@ -75,7 +75,7 @@
                                 break;
                                 default:
                                     echo 'palette-default';
-                            } ?>
+                            } @endphp
                             ' title="{{ $event->name }}">{{ $event->name }}</div>
 
                             @endforeach
