@@ -24,7 +24,7 @@ class UserController extends Controller
         $guests = User::get();
 
         return view('dashboard/guests', [
-            'user' => $user, 
+            'user' => $user,
             'guests' => $guests
         ]);
     }
@@ -37,8 +37,8 @@ class UserController extends Controller
             ->get();
 
         return view('dashboard/staff', [
-            'user' => $user, 
-            'staff'=> $staff
+            'user' => $user,
+            'staff' => $staff
         ]);
     }
 
@@ -62,9 +62,9 @@ class UserController extends Controller
         ]);
     }
 
-     public function profile(Request $request, $id = '')
+    public function profile(Request $request, $id = '')
     {
-        if( empty($id) ){
+        if (empty($id)) {
             $id = Auth::id();
         }
         //$user = User::find(1);
@@ -73,7 +73,7 @@ class UserController extends Controller
         $guests = User::get();
 
         return view('dashboard/user_profile', [
-            'user' => $user, 
+            'user' => $user,
             'guests' => $guests
         ]);
     }
@@ -110,7 +110,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -119,13 +119,13 @@ class UserController extends Controller
         $user = new User;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
-         $dob = $request->dob;
+        $dob = $request->dob;
         $user->dob = $this->dateformat($dob);
-        if($request->hasFile('picfile')){
+        if ($request->hasFile('picfile')) {
             $avatar = $request->file('picfile');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename ) );
-        }else{
+            Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
+        } else {
             $filename = 0;
         }
         $user->pic = $filename;
@@ -142,12 +142,12 @@ class UserController extends Controller
         $user->snapchat = '';
         $user->linkedin = '';
         $user->username = str_random(10);
-        $user->user_id = rand ( 100000 , 999999 );
+        $user->user_id = rand(100000, 999999);
         $user->last_login = Carbon::now();
-        $user->name = $request->first_name.' '.$request->last_name;
+        $user->name = $request->first_name . ' ' . $request->last_name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->pin = rand ( 10000 , 99999 );
+        $user->pin = rand(10000, 99999);
         $user->save();
 
         return response('success', 201);
@@ -156,7 +156,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -175,10 +175,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id='')
+    public function edit($id = '')
     {
         $user = User::find(1);
         //return $user;
@@ -188,17 +188,17 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        if($request->name == 'email'){
+        if ($request->name == 'email') {
             $validatedData = $request->validate([
                 'value' => 'email|unique:users,email|max:190'
             ]);
-        }else{
+        } else {
             $validatedData = $request->validate([
                 'value' => 'max:190'
             ]);
@@ -217,7 +217,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -150,6 +150,9 @@ var paths = {
 //paths end
 
 // Copy start
+
+mix.copy('node_modules/jquery.payment/lib/jquery.payment.min.js', 'public/assets/vendors/jquery-payment/jquery.payment.min.js');
+
     // FONTS
     mix.copy(paths.bootstrap + 'fonts', destFonts);
     mix.copy(paths.bootstrap + 'fonts/glyphicons-halflings-regular.ttf', destFonts + 'bootstrap');

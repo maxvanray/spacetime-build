@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "ajv": "^6.2.0",
+        "jquery.payment": "^3.0.0",
         "spectrum-colorpicker": "^1.8.0"
     }
 }

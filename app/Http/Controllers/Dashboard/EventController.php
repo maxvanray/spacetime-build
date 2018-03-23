@@ -22,7 +22,7 @@ class EventController extends Controller
         $user = Auth::user();
         $events = Event::all();
         return view('dashboard/calendar', [
-            'user' => $user, 
+            'user' => $user,
             'events' => $events
         ]);
     }
@@ -32,7 +32,7 @@ class EventController extends Controller
         $user = Auth::user();
         $events = Event::all();
         return view('dashboard/events', [
-            'user' => $user, 
+            'user' => $user,
             'events' => $events
         ]);
     }
@@ -41,7 +41,7 @@ class EventController extends Controller
     {
         $events = Event::all();
         return $events;
-        
+
     }
 
     /**
@@ -64,18 +64,18 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:100'
+            'name' => 'required|max:100'
         ]);
 
         $event = Event::create($request->all());
-        if($request->ajax()){
-            return response()->json(['success'=>'A new event has been created.']);
+        if ($request->ajax()) {
+            return response()->json(['success' => 'A new event has been created.']);
         }
         return redirect()->route('events');
     }
@@ -83,7 +83,7 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -93,7 +93,7 @@ class EventController extends Controller
         $user = Auth::user();
         return view('dashboard/events_show', [
             'calendar' => $calendar,
-            'user' => $user, 
+            'user' => $user,
             'event' => $event
         ]);
     }
@@ -101,7 +101,7 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -112,8 +112,8 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -124,7 +124,7 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -25,13 +25,13 @@ class CalendarController extends Controller
         $locations = Location::all();
 
         return view('dashboard/calendar', [
-            'user' => $user, 
+            'user' => $user,
             'events' => $events,
             'locations' => $locations
         ]);
     }
 
-    public function location_calendar($location_id)
+    public function locationCalendar($location_id)
     {
         $user = Auth::user();
         $events = Event::all();
@@ -49,7 +49,7 @@ class CalendarController extends Controller
     public function calendarList($location)
     {
         $calendar = Calendar::where('location', '=', $location)->get();
-    	return response( $this->transformCollection($calendar) );
+        return response($this->transformCollection($calendar));
     }
 
     /**
@@ -65,7 +65,7 @@ class CalendarController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -77,7 +77,7 @@ class CalendarController extends Controller
         $user = Auth::user();
         $event = Event::find($event_id);
         $calendar = New Calendar();
-        if(!empty($event_id)){
+        if (!empty($event_id)) {
             $calendar->event_id = $event_id;
             $calendar->price = $event->price;
             $calendar->title = $event->name;
@@ -89,7 +89,7 @@ class CalendarController extends Controller
         $calendar->start = $input['date'];
         $calendar->all_day = $input['all_day'];
 
-        
+
         $calendar->save();
 
         return $calendar;
@@ -99,7 +99,7 @@ class CalendarController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -110,7 +110,7 @@ class CalendarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -121,13 +121,13 @@ class CalendarController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id                                                           
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        
+
         $input = $request->all();
 
         $calendar_id = $input['id'] ?? '';
@@ -147,7 +147,7 @@ class CalendarController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -156,13 +156,13 @@ class CalendarController extends Controller
     }
 
 
-	/**
+    /**
      * @param $parameters
      * @return array
      */
     private function transformCollection($parameters)
     {
-        $collection = array_map( [$this, 'transform'], $parameters->toArray() );
+        $collection = array_map([$this, 'transform'], $parameters->toArray());
         return $collection;
     }
 
@@ -182,10 +182,10 @@ class CalendarController extends Controller
             'end' => ($param['end'] === null ? '' : $param['end']),
             'allDay' => ($param['all_day'] === null ? '' : $param['all_day']),
 
-            'color' => ($param['background_color'] === null ? '' : '#'.$param['background_color']),
+            'color' => ($param['background_color'] === null ? '' : '#' . $param['background_color']),
             'facilitator' => ($param['facilitator'] === null ? '' : User::find($param['facilitator'])),
             'location' => ($param['location'] === null ? '' : Location::find($param['location'])),
-            'price' => ($param['price'] === null ? '' : $param['price']/100),
+            'price' => ($param['price'] === null ? '' : $param['price'] / 100),
             'backgroundColor' => ($param['background_color'] === null ? '' : $param['background_color']),
             'created_by' => ($param['created_by'] === null ? '' : User::find($param['created_by'])),
             'created_at' => ($param['created_at'] === null ? '' : $param['created_at']),

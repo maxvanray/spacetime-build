@@ -8,10 +8,12 @@ use App\Post;
 use Auth;
 use Session;
 
-class PostController extends Controller {
+class PostController extends Controller
+{
 
-    public function __construct() {
-       $this->middleware(['auth', 'clearance'])->except('index', 'show');
+    public function __construct()
+    {
+        $this->middleware(['auth', 'clearance'])->except('index', 'show');
     }
 
     /**
@@ -20,7 +22,8 @@ class PostController extends Controller {
      * @return \Illuminate\Http\Response
      */
 
-    public function index() {
+    public function index()
+    {
         $posts = Post::orderby('id', 'desc')->paginate(5); //show only 5 items at a time in descending order
 
         return view('posts.index', compact('posts'));
@@ -31,22 +34,24 @@ class PostController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         return view('posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         //Validating title and body field
         $this->validate($request, [
-            'title'=>'required|max:100',
-            'body' =>'required',
+            'title' => 'required|max:100',
+            'body' => 'required',
         ]);
 
         $title = $request['title'];
@@ -57,28 +62,30 @@ class PostController extends Controller {
         //Display a successful message upon save
         return redirect()->route('posts.index')
             ->with('flash_message', 'Article,
-             '. $post->title.' created');
+             ' . $post->title . ' created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         $post = Post::findOrFail($id); //Find post of id = $id
 
-        return view ('posts.show', compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $post = Post::findOrFail($id);
 
         return view('posts.edit', compact('post'));
@@ -87,14 +94,15 @@ class PostController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->validate($request, [
-            'title'=>'required|max:100',
-            'body'=>'required',
+            'title' => 'required|max:100',
+            'body' => 'required',
         ]);
 
         $post = Post::findOrFail($id);
@@ -104,17 +112,18 @@ class PostController extends Controller {
 
         return redirect()->route('posts.show',
             $post->id)->with('flash_message',
-            'Article, '. $post->title.' updated');
+            'Article, ' . $post->title . ' updated');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $post = Post::findOrFail($id);
         $post->delete();
 

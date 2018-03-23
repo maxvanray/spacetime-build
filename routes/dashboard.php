@@ -39,7 +39,7 @@ Route::group([
 
     // Calendar
     Route::get('/calendar', 'CalendarController@index')->name('calendar');
-    Route::get('/calendar/{location_id}', 'CalendarController@location_calendar')->name('calendar.location');
+    Route::get('/calendar/{location_id}', 'CalendarController@locationCalendar')->name('calendar.location');
     Route::post('/calendar', 'CalendarController@store')->name('calendar.post');
     Route::post('/calendar/update', 'CalendarController@update')->name('calendar.update');
 

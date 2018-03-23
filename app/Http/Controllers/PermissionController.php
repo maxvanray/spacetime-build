@@ -12,9 +12,11 @@ use Spatie\Permission\Models\Permission;
 
 use Session;
 
-class PermissionController extends Controller {
+class PermissionController extends Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['auth', 'isAdmin']); //isAdmin middleware lets only users with a //specific permission permission to access these resources
     }
 
@@ -23,7 +25,8 @@ class PermissionController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $permissions = Permission::all(); //Get all permissions
         return view('permissions.index')->with('permissions', $permissions);
     }
@@ -33,7 +36,8 @@ class PermissionController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $roles = Role::get(); //Get all roles
 
         return view('permissions.create')->with('roles', $roles);
@@ -42,12 +46,13 @@ class PermissionController extends Controller {
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name' => 'required|max:40',
         ]);
 
         $name = $request['name'];
@@ -69,27 +74,29 @@ class PermissionController extends Controller {
 
         return redirect()->route('permissions.index')
             ->with('flash_message',
-                'Permission'. $permission->name.' added!');
+                'Permission' . $permission->name . ' added!');
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         return redirect('permissions');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $permission = Permission::findOrFail($id);
 
         return view('permissions.edit', compact('permission'));
@@ -98,31 +105,33 @@ class PermissionController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $permission = Permission::findOrFail($id);
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name' => 'required|max:40',
         ]);
         $input = $request->all();
         $permission->fill($input)->save();
 
         return redirect()->route('users.show')
             ->with('flash_message',
-                'Permission'. $permission->name.' updated!');
+                'Permission' . $permission->name . ' updated!');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $permission = Permission::findOrFail($id);
 
         //Make it impossible to delete this specific permission

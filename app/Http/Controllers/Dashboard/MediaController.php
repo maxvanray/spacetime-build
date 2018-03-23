@@ -38,8 +38,8 @@ class MediaController extends Controller
         $media = Media::all();
 
         $media_categories = '';
-        foreach($media as $m){
-            $media_categories .= ','.$m->categories;
+        foreach ($media as $m) {
+            $media_categories .= ',' . $m->categories;
         }
         $media_categories = str_replace("-", " ", $media_categories);
         $categories_array = explode(",", $media_categories);
@@ -48,13 +48,12 @@ class MediaController extends Controller
         sort($categories);
 
         $clean_categories = [];
-        foreach ($categories as $cat){
+        foreach ($categories as $cat) {
             $clean_categories[$cat] = $this->replaceAll($cat);
         }
 
         $user = Auth::user();
         $events = Event::all();
-
 
 
         return view('dashboard/media', [
@@ -87,7 +86,7 @@ class MediaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -100,21 +99,20 @@ class MediaController extends Controller
 
         $user = Auth::user();
 
-        if($request->hasFile('media'))
-        {
+        if ($request->hasFile('media')) {
             $categories = $request->categories;
             $destination_path = 'media_library';
             $file = $request->file('media');
             $extension = strtolower($file->getClientOriginalExtension());
             $filename_original = $file->getClientOriginalName();
             $mime_type = $file->getClientMimeType();
-            $filename = $user->id .'-'. uniqid() .'.'. $extension;
+            $filename = $user->id . '-' . uniqid() . '.' . $extension;
 
             $img = Image::make($file->getRealPath());
 
             $img->resize(300, 300, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save(public_path('/'.$destination_path).'/'.$filename);
+            })->save(public_path('/' . $destination_path) . '/' . $filename);
 
             $media_item = new Media;
             $media_item->name = $request->name;
@@ -137,7 +135,7 @@ class MediaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -148,7 +146,7 @@ class MediaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -159,8 +157,8 @@ class MediaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -171,7 +169,7 @@ class MediaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

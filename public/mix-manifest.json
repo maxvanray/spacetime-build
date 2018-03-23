@@ -2,6 +2,7 @@
     "/assets/css/dashboard.css": "/assets/css/dashboard.css",
     "/assets/css/spacetime.css": "/assets/css/spacetime.css",
     "/assets/css/styles.css": "/assets/css/styles.css",
+    "/assets/vendors/jquery-payment/jquery.payment.min.js": "/assets/vendors/jquery-payment/jquery.payment.min.js",
     "/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf": "/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf",
     "/assets/fonts/bootstrap/glyphicons-halflings-regular.woff": "/assets/fonts/bootstrap/glyphicons-halflings-regular.woff",
     "/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2": "/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2",

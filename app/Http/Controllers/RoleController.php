@@ -11,9 +11,11 @@ use Spatie\Permission\Models\Permission;
 
 use Session;
 
-class RoleController extends Controller {
+class RoleController extends Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware(['auth', 'isAdmin']);//isAdmin middleware lets only users with a //specific permission permission to access these resources
     }
 
@@ -22,7 +24,8 @@ class RoleController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $roles = Role::all();//Get all roles
 
         return view('roles.index')->with('roles', $roles);
@@ -33,23 +36,25 @@ class RoleController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $permissions = Permission::all();//Get all permissions
 
-        return view('roles.create', ['permissions'=>$permissions]);
+        return view('roles.create', ['permissions' => $permissions]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         //Validate name and permissions field
         $this->validate($request, [
-                'name'=>'required|unique:roles|max:20',
-                'permissions' =>'required',
+                'name' => 'required|unique:roles|max:20',
+                'permissions' => 'required',
             ]
         );
 
@@ -70,26 +75,28 @@ class RoleController extends Controller {
 
         return redirect()->route('roles.index')
             ->with('flash_message',
-                'Role'. $role->name.' added!');
+                'Role' . $role->name . ' added!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         return redirect('roles');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         $role = Role::findOrFail($id);
         $permissions = Permission::all();
 
@@ -99,17 +106,18 @@ class RoleController extends Controller {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
 
         $role = Role::findOrFail($id);//Get role with the given id
         //Validate name and permission fields
         $this->validate($request, [
-            'name'=>'required|max:10|unique:roles,name,'.$id,
-            'permissions' =>'required',
+            'name' => 'required|max:10|unique:roles,name,' . $id,
+            'permissions' => 'required',
         ]);
 
         $input = $request->except(['permissions']);
@@ -129,13 +137,13 @@ class RoleController extends Controller {
 
         return redirect()->route('roles.index')
             ->with('flash_message',
-                'Role'. $role->name.' updated!');
+                'Role' . $role->name . ' updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
