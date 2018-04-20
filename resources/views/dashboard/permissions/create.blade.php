@@ -1,8 +1,8 @@
-@extends('layouts/default')
+@extends('layouts.default')
 
 {{-- Page title --}}
 @section('title')
-    Guests
+    Create Permission
     @parent
 @stop
 
@@ -19,7 +19,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Guests
+                Add New Permission
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -28,7 +28,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"> Guests</a>
+                    <a href="{{route('dashboard.users.index')}}"> Users</a>
+                </li>
+                <li>
+                    <a href="{{route('dashboard.permissions.index')}}"> Permissions</a>
+                </li>
+                <li>
+                    <a href="#"> Add New Permission</a>
                 </li>
             </ol>
         </section>
@@ -39,51 +45,25 @@
                     <div class="panel">
                     
                         <div class="panel-body">
-                            <div class="table-responsive">
 
-                                <table id="datatable" class="table table-striped table-bordered table-hover" width="100%" border="0" cellspacing="0" cellpadding="0" summary="This is a list of the guests.">
-                                    <thead>
-                                      <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Pin</th>
-                                        <th>Active </th>
-                                        <th>Edit</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                       @foreach($guests as $guest)
-                                      <tr>
-                                        <td>{{ $guest->name }}</td>
-                                        <td><a href="mailto:{{ $guest->email }}">{{ $guest->email }}</a></td>
-                                        <td>{{ $guest->phone }}</td>
-                                        <td>{{ $guest->pin }}</td>
-                                        <td>{{ $guest->active }}</td>
-                                        <td class="userEdit" data-user="{{ $user->id }}">
-                                            <button 
-                                                class="btn btn-primary btn-xs userEditBtn"
-                                                data-user="{{ $guest->id }}" 
-                                                data-target="#edit" 
-                                                data-placement="top">
-                                                    <span class="glyphicon glyphicon-pencil"></span>
-                                            </button> 
-                                            | 
-                                            <button 
-                                                class="btn btn-danger btn-xs userDeleteBtn" 
-                                                data-user="{{ $guest->id }}"
-                                                data-toggle="modal"
-                                                data-target="#delete" 
-                                                data-placement="top">
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
-                                        </td>
-                                      </tr>
-                                       @endforeach
-                                    </tbody>
-                                </table>
+                            {{ Form::open(array('route' => 'dashboard.permissions.store')) }}
 
-                            </div>
+                            <div class="form-group">
+                                {{ Form::label('name', 'Permission Name') }}
+                                {{ Form::text('name', '', array('class' => 'form-control')) }}
+                            </div><br>
+                            @if(!$roles->isEmpty())
+                            <h4>Assign Permission to Roles</h4>
+
+                            @foreach ($roles as $role)
+                                {{ Form::checkbox('roles[]',  $role->id ) }}
+                                {{ Form::label($role->name, ucfirst($role->name)) }}<br>
+                            @endforeach
+                            @endif
+                            <br>
+                            {{ Form::submit('Add', array('class' => 'btn btn-primary')) }}
+
+                            {{ Form::close() }}
                         </div>
                     </div>
                 </div>

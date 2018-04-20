@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Activities;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -18,37 +20,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function guests(Request $request)
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $guests = User::get();
+        $users = User::get();
 
-        return view('dashboard/guests', [
-            'user' => $user,
-            'guests' => $guests
+        return view('dashboard.users.index', [
+            'users' => $users
         ]);
     }
 
-    public function staff(Request $request)
-    {
-        $user = Auth::user();
-        $staff = DB::table('user_staff')
-            ->leftJoin('users', 'users.id', '=', 'user_staff.user_id')
-            ->get();
-
-        return view('dashboard/staff', [
-            'user' => $user,
-            'staff' => $staff
-        ]);
-    }
-
-    public function addUser(Request $request)
+    public function addUser()
     {
 
         //$user = User::find(1);
         $user = Auth::user();
 
-        return view('dashboard/addnew_user', [
+        return view('dashboard.users.create', [
             'user' => $user
         ]);
     }
@@ -57,7 +45,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        return view('dashboard/addnew_user', [
+        return view('dashboard.users.new', [
             'user' => $user
         ]);
     }
@@ -72,7 +60,7 @@ class UserController extends Controller
         $user = User::find($id);
         $guests = User::get();
 
-        return view('dashboard/user_profile', [
+        return view('dashboard.users.profile', [
             'user' => $user,
             'guests' => $guests
         ]);
@@ -83,9 +71,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    public function create(Request $request)
     {
-        //
+        $user = Auth::user();
+        $roles = Role::get();
+
+        return view('dashboard.users.create', [
+            'user' => $user,
+            'roles' => $roles
+        ]);
     }
 
     public function dateformat($date)
@@ -115,42 +110,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|max:120',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed'
+        ]);
 
-        $user = new User;
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $dob = $request->dob;
-        $user->dob = $this->dateformat($dob);
-        if ($request->hasFile('picfile')) {
-            $avatar = $request->file('picfile');
-            $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $filename));
-        } else {
-            $filename = 0;
+        $user = User::create($request->only('email', 'name', 'password'));
+
+        $roles = $request['roles']; //Retrieving the roles field
+        //Checking if a role was selected
+        if (isset($roles)) {
+            foreach ($roles as $role) {
+                $role_r = Role::where('id', '=', $role)->firstOrFail();
+                $user->assignRole($role_r); //Assigning role to user
+            }
         }
-        $user->pic = $filename;
-        $user->bio = $request->bio;
-        $user->gender = $request->gender;
-        $user->phone = $request->phone;
-        $user->country = request()->ip();
-        $user->state = $request->state;
-        $user->city = $request->city;
-        $user->zip = $request->postal;
-        $user->facebook = '';
-        $user->twitter = '';
-        $user->instagram = '';
-        $user->snapchat = '';
-        $user->linkedin = '';
-        $user->username = str_random(10);
-        $user->user_id = rand(100000, 999999);
-        $user->last_login = Carbon::now();
-        $user->name = $request->first_name . ' ' . $request->last_name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->pin = rand(10000, 99999);
-        $user->save();
-
-        return response('success', 201);
+        //Redirect to the users.index view and display message
+        return redirect()->route('dashboard.users.index')
+            ->with('flash_message',
+                'User successfully added.');
     }
 
     /**
@@ -161,15 +140,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::where('id', '=', $id)->first();
-//        $user['attributes'] = User::find($id)->attributes;
-        $user_attributes = User::find($id)->attributes;
+        $user = User::find($id);
 
-        //return $user;
-        return view('dashboard.user_show',
-            compact('user'),
-            compact('user_attributes')
-        );
+        return view('dashboard.users.index', [
+            'user'=>$user
+        ]);
     }
 
     /**
@@ -178,11 +153,15 @@ class UserController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id = '')
+    public function edit($id)
     {
-        $user = User::find(1);
-        //return $user;
-        return view('dashboard/edit_user', ['user' => $user]);
+        $user = User::find($id);
+        $roles = Role::get();
+
+        return view('dashboard.users.edit', [
+            'user' => $user,
+            'roles'=>$roles
+        ]);
     }
 
     /**
@@ -194,24 +173,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->name == 'email') {
-            $validatedData = $request->validate([
-                'value' => 'email|unique:users,email|max:190'
-            ]);
+        $user = User::findOrFail($id); //Get role specified by id
+
+        //Validate name, email and password fields
+        $this->validate($request, [
+            'name' => 'required|max:120',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'required|min:6|confirmed'
+        ]);
+        $input = $request->only(['name', 'email', 'password']); //Retreive the name, email and password fields
+        $roles = $request['roles']; //Retreive all roles
+        $user->fill($input)->save();
+
+        if (isset($roles)) {
+            $user->roles()->sync($roles);  //If one or more role is selected associate user to roles
         } else {
-            $validatedData = $request->validate([
-                'value' => 'max:190'
-            ]);
+            $user->roles()->detach(); //If no role is selected remove exisiting role associated to a user
         }
-
-
-        $user = User::find($id);
-        $name = $request->get('name');
-        $value = $request->get('value');
-        $user->$name = $value;
-        $user->save();
-
-        return $value;
+        return redirect()->route('dashboard.users.index')
+            ->with('flash_message',
+                'User successfully edited.');
     }
 
     /**
@@ -222,6 +203,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return 'success';
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('dashboard.users.index')
+            ->with('flash_message',
+                'User '. $user->name . ' successfully deleted.');
     }
+
 }

@@ -20,28 +20,11 @@ class EventController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $events = Event::all();
-        return view('dashboard/calendar', [
+        $events = Event::latest('id')->get();
+        return view('dashboard.events.index', [
             'user' => $user,
             'events' => $events
         ]);
-    }
-
-    public function events()
-    {
-        $user = Auth::user();
-        $events = Event::all();
-        return view('dashboard/events', [
-            'user' => $user,
-            'events' => $events
-        ]);
-    }
-
-    public function eventlist()
-    {
-        $events = Event::all();
-        return $events;
-
     }
 
     /**
@@ -54,7 +37,7 @@ class EventController extends Controller
         $user = Auth::user();
         $events = Event::all();
         $locations = Location::all();
-        return view('dashboard/events_add', [
+        return view('dashboard.events.create', [
             'user' => $user,
             'events' => $events,
             'locations' => $locations
@@ -77,7 +60,7 @@ class EventController extends Controller
         if ($request->ajax()) {
             return response()->json(['success' => 'A new event has been created.']);
         }
-        return redirect()->route('events');
+        return redirect()->route('dashboard.events.index');
     }
 
     /**
@@ -91,7 +74,7 @@ class EventController extends Controller
         $calendar = Calendar::where('event_id', '=', $id)->get();
         $event = Event::find($id);
         $user = Auth::user();
-        return view('dashboard/events_show', [
+        return view('dashboard.events.edit', [
             'calendar' => $calendar,
             'user' => $user,
             'event' => $event
@@ -106,7 +89,14 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        //
+        $calendar = Calendar::where('event_id', '=', $id)->get();
+        $event = Event::find($id);
+        $user = Auth::user();
+        return view('dashboard.events.edit', [
+            'calendar' => $calendar,
+            'user' => $user,
+            'event' => $event
+        ]);
     }
 
     /**
@@ -129,6 +119,11 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $event->delete();
+
+        return redirect()->route('dashboard.events.index')
+            ->with('flash_message',
+                'Event ' . $event->name . ' deleted!');
     }
 }

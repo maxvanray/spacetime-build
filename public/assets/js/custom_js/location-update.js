@@ -1,8 +1,6 @@
 'use strict';
 $(function(){
 
-    
-
     // TIME SELECT
     $(".timeselect").timeDropper({
         primaryColor: "#48CFAD",
@@ -61,15 +59,24 @@ $(function(){
     // EDITABLE FIELDS
     $('#name').editable({
         type: 'text',
-        title: 'Enter Location Name'
+        title: 'Enter Location Name',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#address').editable({
         type: 'text',
-        title: 'Enter Location Address'
+        title: 'Enter Location Address',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#city').editable({
         type: 'text',
-        title: 'Enter Location City'
+        title: 'Enter Location City',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#state').editable({
         typeahead: {
@@ -79,27 +86,45 @@ $(function(){
     });
     $('#zip').editable({
         type: 'text',
-        title: 'Enter Address'
+        title: 'Enter Address',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#floor').editable({
         type: 'text',
-        title: 'Enter Address'
+        title: 'Enter Address',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#contact').editable({
         type: 'text',
-        title: 'Enter Location Contact Name'
+        title: 'Enter Location Contact Name',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#email').editable({
         type: 'text',
-        title: 'Enter Location Contact Name'
+        title: 'Enter Location Contact Name',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#phone').editable({
         type: 'text',
-        title: 'Enter Location Phone Number'
+        title: 'Enter Location Phone Number',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
     $('#description').editable({
         type: 'text',
-        title: 'Enter Location Phone Number'
+        title: 'Enter Location Phone Number',
+        ajaxOptions: {
+            type: 'put'
+        }
     });
 
 

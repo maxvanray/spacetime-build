@@ -1,16 +1,17 @@
-
 @if (count($errors) > 0)
-    <div class="alert alert-danger">
-        Oops! We have some erros
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    @include ('errors.list')
+@endif
+
+@if(Session::has('message'))
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {!!Session::get('message')!!}
     </div>
 @endif
-@if(Session::has('message'))
-    <div class="alert alert-success">
-      {!!Session::get('message')!!}
+
+@if(Session::has('flash_message'))
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {!!Session::get('flash_message')!!}
     </div>
 @endif

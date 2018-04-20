@@ -20,7 +20,7 @@
                     <div class="content-profile">
                         <h4 class="media-heading">
                             @auth
-                                {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
+                                {{ Auth::user()->name }}
                             @endauth
                         </h4>
                         <ul class="icon-list">
@@ -69,8 +69,19 @@
 
                 <?php // USER ?>
                 <li {!! 
-                ($routename===('guests')||$routename===('staff')||$routename===('users')||$routename===('users')||$routename===('adduser')||$routename===('profile')? 'class="active"':"") 
-
+                (
+                $routename===('dashboard.roles.index')||
+                $routename===('dashboard.roles.create')||
+                $routename===('dashboard.roles.edit')||
+                $routename===('dashboard.permissions.index')||
+                $routename===('dashboard.permissions.create')||
+                $routename===('dashboard.permissions.edit')||
+                $routename===('dashboard.users.index')||
+                $routename===('dashboard.users.create')||
+                $routename===('dashboard.users.show')||
+                $routename===('dashboard.users.edit')||
+                $routename===('profile')? 'class="active"':""
+                )
                 !!}>
                     <a href="#">
                         <i class="menu-icon fa fa-fw fa-users"></i>
@@ -78,100 +89,104 @@
                                 class="fa arrow"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li {!! ($routename===('guests')? 'class="active"':"") !!}>
-                            <a href="{{ @route('guests') }} ">
+                        <li {!! ($routename===('dashboard.users.index')? 'class="active"':"") !!}>
+                            <a href="{{ @route('dashboard.users.index') }} ">
                                 <i class="fa fa-list" aria-hidden="true"></i> Users
                             </a>
                         </li>
 
-                        <li {!! ($routename===('adduser')? 'class="active"':"") !!}>
-                            <a href="{{ @route('adduser') }} ">
-                                <i class="fa fa-fw fa-user"></i> Add New User
+
+                        <li {!! ($routename===('dashboard.permissions.edit')||$routename===('dashboard.permissions.index')||$routename===('dashboard.permissions.create')? 'class="active"':"") !!}>
+                            <a href="{{ @route('dashboard.permissions.index') }} ">
+                                <i class="fa fa-fw fa-user"></i> Permissions
                             </a>
                         </li>
+
+                        <li {!! ($routename===('dashboard.roles.edit')||$routename===('dashboard.roles.create')||$routename===('dashboard.roles.index')? 'class="active"':"") !!}>
+                            <a href="{{ @route('dashboard.roles.index') }} ">
+                                <i class="fa fa-fw fa-user"></i> Roles
+                            </a>
+                        </li>
+
                         <li {!! ($routename===('profile')? 'class="active"':"") !!}>
                             <a href="{{ @route('profile') }} ">
-                                <i class="fa fa-fw fa-user-md"></i> View My Profile
+                                <i class="fa fa-fw fa-user-md"></i> View Profile
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 <?php  // CALENDAR ?>
-                <li {!! ($routename===('events.create')||$routename===('calendar.location')||$routename===('calendar')||$routename===('events')? 'class="active"':"") !!}>
+                <li {!! (
+                $routename===('dashboard.calendars.index')||
+                $routename===('dashboard.calendars.show')||
+                $routename===('dashboard.calendars.edit')||
+                $routename===('dashboard.calendars.location')||
+
+                $routename===('dashboard.events.index')||
+                $routename===('dashboard.events.create')||
+                $routename===('dashboard.events.show')
+                ? 'class="active"':"") !!}>
                     <a href="#">
                         <i class="menu-icon fa fa-fw fa-calendar"></i>
-                        <span>Scheduling  Events</span> <span
+                        <span>Events</span> <span
                                 class="fa arrow"></span>
                     </a>
                     <ul class="sub-menu">
                         @if (!empty($calendar_locations))
                         @foreach($calendar_locations as $cal_loc)
-                            <li>
-                             <?php
-                               /* if( $routeparams['location_id']==$cal_loc->id ){
-                                    echo '<li class="active" >';
+                             @php
+                                if(is_array($routeparams) && array_key_exists('location_id', $routeparams)){
+                                    if( $routeparams['location_id']==$cal_loc->id ){
+                                        echo '<li class="active" >';
+                                    }else{
+                                        echo '<li>';
+                                    }
                                 }else{
                                     echo '<li>';
-                                } */
-                                    ?>
-
-                                <a href="{{ @route('calendar') }}/{{$cal_loc->id}} ">
+                                }
+                             @endphp
+                                <a href="{{ @route('dashboard.calendars.show', $cal_loc->id) }} ">
                                     <i class="fa fa-calendar-o" aria-hidden="true"></i> {{$cal_loc->name}}
                                 </a>
                             </li>
                         @endforeach
                         @endif
-                        <li {!! ($routename===('events')? 'class="active"':"") !!}>
-                            <a href="{{ @route('events') }} ">
-                                <i class="fa fa-list" aria-hidden="true"></i> Event List
-                            </a>
-                        </li>
-                        <li {!! ($routename===('events.create')? 'class="active"':"") !!}>
-                            <a href="{{ @route('events.create') }} ">
-                                <i class="fa fa-list" aria-hidden="true"></i> Create Event
+                        <li {!! ($routename===('dashboard.events.index')||$routename===('dashboard.events.create')||$routename===('dashboard.events.show')? 'class="active"':"") !!}>
+                            <a href="{{ @route('dashboard.events.index') }} ">
+                                <i class="fa fa-list" aria-hidden="true"></i> Events
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 <?php // LOCATION ?>
-                <li {!! ($routename===('location.index')||$routename===('location.create')? 'class="active"':"") !!}>
+                <li {!! ($routename===('dashboard.locations.index')||$routename===('dashboard.locations.create')||$routename===('dashboard.locations.edit')? 'class="active"':"") !!}>
                     <a href="#">
                         <i class="menu-icon fa fa-fw fa-location-arrow"></i>
-                        <span>Location</span> <span
+                        <span>Locations</span> <span
                                 class="fa arrow"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li {!! ($routename===('location.index')? 'class="active"':"") !!}>
-                            <a href="{{ @route('location.index') }} ">
+                        <li {!! ($routename===('dashboard.locations.index')? 'class="active"':"") !!}>
+                            <a href="{{ @route('dashboard.locations.index') }} ">
                                 <i class="fa fa-list" aria-hidden="true"></i> Locations
-                            </a>
-                        </li>
-                        <li {!! ($routename===('location.create')? 'class="active"':"") !!}>
-                            <a href="{{ @route('location.create') }} ">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i> Create Location
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 <?php // MEDIA ?>
-                <li {!! ($routename===('media.index')||$routename===('media.create')? 'class="active"':"") !!}>
+                <li {!! ($routename===('dashboard.images.index')||$routename===('dashboard.images.create')? 'class="active"':"") !!}>
                     <a href="#">
                         <i class="menu-icon fa fa-fw fa-camera"></i>
                         <span>Media</span> <span
                                 class="fa arrow"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li {!! ($routename===('media.index')? 'class="active"':"") !!}>
-                            <a href="{{ @route('media.index') }} ">
-                                <i class="fa fa-list" aria-hidden="true"></i> Media Library
-                            </a>
-                        </li>
-                        <li {!! ($routename===('media.create')? 'class="active"':"") !!}>
-                            <a href="{{ @route('media.create') }} ">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i> Add Media
+                        <li {!! ($routename===('dashboard.images.index')? 'class="active"':"") !!}>
+                            <a href="{{ @route('dashboard.images.index') }}">
+                                <i class="fa fa-list" aria-hidden="true"></i> Image Library
                             </a>
                         </li>
                     </ul>

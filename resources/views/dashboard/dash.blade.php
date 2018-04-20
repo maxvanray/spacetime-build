@@ -15,9 +15,11 @@
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>Dashboard</h1>
+        <h1>
+            Dashboard
+        </h1>
         <ol class="breadcrumb">
-            <li class="active">
+            <li>
                 <a href="{{route('dashboard')}}">
                     <i class="fa fa-fw fa-home"></i> Dashboard
                 </a>

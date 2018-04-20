@@ -1,4 +1,4 @@
-@extends('layouts/default')
+@extends('layouts.default')
 
 {{-- Page title --}}
 @section('title')
@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"> Users</a>
+                    <a href="{{route('dashboard.users.index')}}"> Users </a>
                 </li>
                 <li class="active">
                     View User

@@ -8,54 +8,18 @@
 
 {{-- page level styles --}}
 @section('header_styles')
-
-    <!--page level css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/daterangepicker/css/daterangepicker.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/datetimepicker/css/bootstrap-datetimepicker.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/datedropper/datedropper.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/timedropper/css/timedropper.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/jquerydaterangepicker/css/daterangepicker.min.css')}}">
-    <!--clock face css-->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/clockpicker/css/bootstrap-clockpicker.min.css')}}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datepicker.css')}}"> -->
-    <!--end of page level css-->
-
-    <!--page level css -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/iCheck/css/all.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/bootstrap-fileinput/css/fileinput.min.css')}}" media="all" />
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/formelements.css')}}">
-    <!--end of page level css-->
-
-    <!--page level css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/alertmessage.css')}}">
-    <!--end of page level css-->
-
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/x-editable/css/bootstrap-editable.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/x-editable/css/typeahead.js-bootstrap.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/iCheck/css/all.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/inlinedit.css')}}"/>
-
-
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/bootstrap-table/css/bootstrap-table.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom_css/bootstrap_tables.css')}}">
-
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/toastr/css/toastr.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom_css/toastr_notificatons.css')}}">
-
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom_css/advanced_modals.css')}}">
-
     <meta name="csrf-token" id="_token" data-token="{{ csrf_token() }}" content="{!! csrf_token() !!}" >
-    
 @stop
 
 {{-- Page content --}}
 @section('content')
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <!--section starts-->
-
-        <h1>Update Location</h1>
-
+        <h1>
+            Edit Location
+        </h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{route('dashboard')}}">
@@ -63,15 +27,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('location.index')}}"> Location</a>
+                <a href="{{route('dashboard.locations.index')}}"> Locations</a>
             </li>
             <li class="active">
-                Update Location
+                <a href="{{@route('dashboard.locations.index')}}"> Edit Location: </a><a href="#">{{$location->name}}</a>
             </li>
         </ol>
     </section>
-
-@include('layouts/alerts/alerts')
 
     <!-- Main content -->
     <section class="content">
@@ -85,7 +47,7 @@
                             <i class="fa fa-fw fa-info-circle"></i> Location Name and Address
                         </h3>
                     </div>
-                    <table id="user" class="table table-bordered table-striped m-t-10">
+                    <table id="user" class="table table-bordered table-striped">
                         <tbody>
                         <tr>
                             <td class="table_simple">Location Name:</td>
@@ -96,7 +58,7 @@
                                 class="editable editable-click"
                                 name="name" 
                                 data-type="text" 
-                                data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                 data-pk="{{ $location->id }}"
                                 data-title="Name">{{ $location->name or "<None>" }}</a>
                             </td>
@@ -109,7 +71,7 @@
                                     class="editable editable-click"
                                     name="address" 
                                     data-type="text" 
-                                    data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                    data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                     data-pk="{{ $location->id }}"
                                     data-title="Enter Location Address">{{ $location->address or "<None>" }}</a>
                             </td>
@@ -122,7 +84,7 @@
                                     class="editable editable-click"
                                     name="floor" 
                                     data-type="text" 
-                                    data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                    data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                     data-pk="{{ $location->id }}"
                                     data-title="Enter Location Floor">{{ $location->floor or "<None>" }}</a>
                             </td>
@@ -135,7 +97,7 @@
                                     class="editable editable-click"
                                     name="city" 
                                     data-type="text" 
-                                    data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                    data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                     data-pk="{{ $location->id }}"
                                     data-title="Enter Location Name">{{ $location->city or "<None>" }}</a>
                             </td>
@@ -148,7 +110,7 @@
                                     class="editable editable-click"
                                     name="state" 
                                     data-type="typeaheadjs" 
-                                    data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                    data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                     data-pk="{{ $location->id }}"
                                     data-title="Start typing State..">{{ $location->state or "<None>" }}</a>
                             </td>
@@ -161,7 +123,7 @@
                                     class="editable editable-click"
                                     name="zip" 
                                     data-type="text" 
-                                    data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                    data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                     data-pk="{{ $location->id }}"
                                     data-title="Enter Location Zipcode">{{ $location->zip or "<None>" }}</a>
                             </td>
@@ -170,7 +132,7 @@
                         </tbody>
                     </table>
 
-                </div><!-- .panel -->
+                </div>
             </div>
 
             <div class="col-lg-12">
@@ -206,13 +168,13 @@
                                                             </div>
                                                         @else
                                                             @foreach($media as $m)
+                                                                @php
+                                                                    $media_id = $m->id;
+                                                                @endphp
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>
-                                                                            <input type="checkbox" name="image_{{$m->id}}" value="{{$m->id}}"
-                                                                                   <?php
-                                                                                   $media_id = $m->id;
-                                                                                   ?>
+                                                                            <input type="checkbox" name="image[]" value="{{$m->id}}"
                                                                                    @if( in_array($media_id, $used_images) )
                                                                                    checked
                                                                                     @endif
@@ -236,7 +198,7 @@
                                                         <button type="button" id="media_close" class="btn btn-default" data-dismiss="modal">Close
                                                         </button>
                                                         <br>
-                                                        <a href="{{route('media.create')}}" class="btn btn-danger">New</a>
+                                                        <a href="{{route('dashboard.images.create')}}" class="btn btn-danger">New</a>
                                                     </div>
 
                                                 </form>
@@ -246,10 +208,12 @@
 
                             </td>
                             <td class="table_superuser">
-                                @if( !empty($location->images) )
-                                @foreach( $location->images_full as $image)
-                                    <img src="{{url($image->location)}}/{{ $image->filename }}" class="img-responsive" style="padding: 5px">
-                                @endforeach
+                                @if( count($images)>0 )
+                                    <h6>No Images</h6>
+                                @else
+                                    @foreach( $images as $image)
+                                        <img src="{{url($image->location)}}/{{ $image->filename }}" class="img-responsive" style="padding: 5px">
+                                    @endforeach
                                 @endif
                             </td>
                         </tr>
@@ -279,7 +243,7 @@
                                 class="editable editable-click"
                                 name="contact" 
                                 data-type="text" 
-                                data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                 data-pk="{{ $location->id }}"
                                 data-title="Enter Location Contact Name">{{ $location->contact or "<None>" }}</a>
                         </td>
@@ -292,7 +256,7 @@
                                 class="editable editable-click"
                                 name="email" 
                                 data-type="text" 
-                                data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                 data-pk="{{ $location->id }}"
                                 data-title="Enter Location Contact Email">{{ $location->email or "<None>" }}</a>
                         </td>
@@ -305,7 +269,7 @@
                                 class="editable editable-click"
                                 name="phone" 
                                 data-type="text" 
-                                data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                 data-pk="{{ $location->id }}"
                                 data-title="Enter Location Phone">{{ $location->phone or "<None>" }}</a>
                         </td>
@@ -318,7 +282,7 @@
                                 class="editable editable-click"
                                 name="description" 
                                 data-type="text" 
-                                data-url="{{route('location.update', ['id'=>$location->id])}}"
+                                data-url="{{route('dashboard.locations.update', ['id'=>$location->id])}}"
                                 data-pk="{{ $location->id }}"
                                 data-title="Enter Business Description">{{ $location->description or "<None>" }}</a>
                         </td>
@@ -332,7 +296,7 @@
                 
         </div>
 
-        <!--fourth table start-->
+        <!--Hours of Operation start-->
         <div class="row">
                 
             <div class="col-lg-12">
@@ -343,7 +307,7 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="nav-tabs-custom">
+                    <?php /*    <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
                                 <li class="active">
                                     <a href="#tab_1" data-toggle="tab">
@@ -710,7 +674,7 @@
                                 </div>
                                 <!-- /.tab-pane -->
                             </div>
-                            <!-- /.tab-content -->
+                            <!-- /.tab-content --> */ ?>
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -801,7 +765,7 @@
 
             </div> 
         </div>
-        <!--fourth table end-->
+        <!--Hours of Operation end-->
 
 
 
@@ -813,9 +777,8 @@
 @stop
 
 {{-- page level scripts --}}
-    @section('footer_scripts')
-<!-- begining of page level js -->
-<!-- <script type="text/javascript"  src="{{asset('assets/vendors/jquery-mockjax/js/jquery.mockjax.js')}}"></script> -->
+@section('footer_scripts')
+
 <script type="text/javascript"  src="{{asset('assets/vendors/moment/js/moment.min.js')}}"></script>
 <script type="text/javascript"  src="{{asset('assets/vendors/x-editable/js/bootstrap-editable.js')}}"></script>
 <script type="text/javascript"  src="{{asset('assets/vendors/x-editable/js/typeahead.js')}}"></script>
@@ -826,19 +789,14 @@
 <script type="text/javascript" src="{{asset('assets/vendors/toastr/js/toastr.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/custom_js/toastr_notifications.js')}}"></script>
 
-<!-- end of page level js -->
-
-<!-- begining of page level js -->
 <script type="text/javascript" src="{{asset('assets/vendors/editable-table/js/mindmup-editabletable.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/vendors/bootstrap-table/js/bootstrap-table.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/vendors/tableExport/tableExport.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/custom_js/bootstrap_tables.js')}}"></script>
 
-<!-- end of page level js -->
+<script type="text/javascript" src="{{asset('assets/vendors/timedropper/js/timedropper.js')}}" ></script>
 
-<script  type="text/javascript" src="{{asset('assets/vendors/timedropper/js/timedropper.js')}}" ></script>
-<!--<script  type="text/javascript" src="{{asset('assets/js/custom_js/datepickers.js')}}" ></script>-->
-<script type="text/javascript" src="{{asset('assets/js/location-update.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/custom_js/location-update.js')}}"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -854,8 +812,9 @@
         $('#media_save').on('click', function (event) {
             event.preventDefault();
             var form = $('form.location_images').serialize();
+
             $.ajax({
-                url:'{{url('/dashboard/location/'.$location->id.'/media')}}',
+                url:'{{route('dashboard.location.images.update', [$location->id])}}',
                 type: 'POST',
                 data: form,
                 success: function(msg){
@@ -863,7 +822,7 @@
                     location.reload();
                 }
             });
-            console.log({{ $location->id }});
+            //console.log({{ $location->id }});
         });
 
         $('.icheckbox_square-blue').on('click', function (event) {

@@ -104,7 +104,17 @@ class CalendarController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = Auth::user();
+        $events = Event::all();
+        $locations = Location::all();
+        $location = Location::find($id);
+
+        return view('dashboard.calendars.show', [
+            'user' => $user,
+            'events' => $events,
+            'locations' => $locations,
+            'location' => $location
+        ]);
     }
 
     /**

@@ -25,47 +25,66 @@ Route::group([
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
     // User
-    Route::resource('user', 'UserController');
-    Route::post('user/{id}', 'UserController@update')->name('user.update');
-    Route::post('user-attributes/{id}', 'UserController@attributes')->name('userattributes.update');
-    Route::get('/guests', 'UserController@guests')->name('guests');
-    Route::get('/staff', 'UserController@staff')->name('staff');
-    Route::get('/add-user', 'UserController@addUser')->name('adduser');
-    Route::post('/add-user', 'UserController@store')->name('adduser_post');
+    Route::resource('permissions', 'PermissionController', ['as'=>'dashboard']);
+
+    Route::resource('roles', 'RoleController', ['as'=>'dashboard']);
+
+    Route::resource('users', 'UserController', ['as'=>'dashboard']);
+
+    Route::resource('events', 'EventController', ['as'=>'dashboard']);
+
+    Route::resource('locations', 'LocationController', ['as'=>'dashboard']);
+    Route::post('locations/{id}/images', 'LocationController@updateImages')->name('dashboard.location.images.update');
+
+    Route::resource('calendars', 'CalendarController', ['as'=>'dashboard']);
+
+    Route::resource('media/images', 'MediaController', ['as'=>'dashboard']);
+
+
+
+
+    //Route::get('/user', 'UserController@index')->name('dashboard.user.index');
+    //Route::delete('/user', 'UserController@destroy')->name('dashboard.user.destroy');
+    //Route::resource('user', 'UserController');
+    //Route::post('user/{id}', 'UserController@update')->name('dashboard.user.update');
+    //Route::post('user-attributes/{id}', 'UserController@attributes')->name('userattributes.update');
+
+    //Route::get('/add-user', 'UserController@create')->name('adduser');
+    //Route::post('/add-user', 'UserController@store')->name('adduser_post');
     //Route::get('/edit-user', 'UserController@store')->name('edit_user.store');
     //Route::get('/profile', 'UserController@profile')->name('profile.index');
     Route::get('/profile', 'UserController@profile')->name('profile');
     Route::get('/profile/{id}', 'UserController@profile')->name('profile.id');
 
     // Calendar
-    Route::get('/calendar', 'CalendarController@index')->name('calendar');
+    //Route::get('/calendar', 'CalendarController@index')->name('calendar');
     Route::get('/calendar/{location_id}', 'CalendarController@locationCalendar')->name('calendar.location');
-    Route::post('/calendar', 'CalendarController@store')->name('calendar.post');
-    Route::post('/calendar/update', 'CalendarController@update')->name('calendar.update');
+    //Route::post('/calendar', 'CalendarController@store')->name('calendar.post');
+    //Route::post('/calendar/update', 'CalendarController@update')->name('calendar.update');
 
     //Route::get('/calendarlist', 'CalendarController@calendarList');
     Route::get('/calendarlist/{location}', 'CalendarController@calendarList');
     Route::post('/calendarlist', 'CalendarController@store');
 
     //Media
-    Route::get('/media', 'MediaController@index')->name('media.index');
-    Route::post('/media', 'MediaController@store')->name('media.post');
-    Route::get('/media/create', 'MediaController@create')->name('media.create');
+    //Route::get('/media', 'MediaController@index')->name('media.index');
+    //Route::post('/media', 'MediaController@store')->name('media.post');
+    //Route::get('/media/create', 'MediaController@create')->name('media.create');
 
     //Events
-    Route::get('/events', 'EventController@events')->name('events');
+    /*Route::get('/events', 'EventController@events')->name('events');
     Route::get('/events/create', 'EventController@create')->name('events.create');
     Route::get('/events/{id}', 'EventController@show');
-    Route::post('/events', 'EventController@store')->name('events.store');
+    Route::post('/events', 'EventController@store')->name('events.store');*/
 
     // Event
     //Route::resource('/location', 'LocationController');
 
     // Location
-    Route::resource('/location', 'LocationController');
-    Route::post('location/{id}', 'LocationController@update')->name('location.update');
-    Route::post('location/schedule/{id}', 'LocationController@updateLocationTime')->name('location.updateschedule');
-    Route::post('/location/{location}/media', 'LocationController@media');
+//    Route::resource('/location', 'LocationController');
+    //Route::post('location/{id}', 'LocationController@update')->name('location.update');
+    //Route::post('location/schedule/{id}', 'LocationController@updateLocationTime')->name('location.updateschedule');
+
 
     //Route::resource('/location', 'LocationController@index')->name('location');
     //Route::get('/add-location', 'LocationController@index')->name('add-location');

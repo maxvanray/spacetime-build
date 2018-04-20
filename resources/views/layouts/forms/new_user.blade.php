@@ -1,5 +1,5 @@
 <!--main content-->
-<form id="adduser_form" action="{{ route('adduser_post') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+<form id="adduser_form" action="{{ route('dashboard.user.store') }}" method="POST" enctype="multipart/form-data" class="form-horizontal">
     <!-- CSRF Token -->
     {{ csrf_field() }}
 

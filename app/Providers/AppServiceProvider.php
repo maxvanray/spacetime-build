@@ -18,8 +18,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        $locations = Location::all();
-        View::share('calendar_locations', $locations);
+        $calendar_locations = Location::all();
+        View::share('calendar_locations', $calendar_locations);
     }
 
     /**

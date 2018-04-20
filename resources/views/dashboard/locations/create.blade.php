@@ -47,10 +47,10 @@
                 </a>
             </li>
             <li>
-                <a href="{{ @route('location.index') }}"> Location</a>
+                <a href="{{ @route('dashboard.locations.index') }}"> Locations</a>
             </li>
             <li class="active">
-                Create Location
+                <a href="#"> Add New Location</a>
             </li>
         </ol>
     </section>
@@ -58,14 +58,14 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-<form id="create_location" class="form-horizontal" method="POST" action="{{ route('location.store') }}">
+<form id="create_location" class="form-horizontal" method="POST" action="{{ route('dashboard.locations.store') }}">
     {{ csrf_field() }}
 
     @if (session('status'))
     <div class="alert alert-success alert-dismissable">
         <button type="button" class="close" data-dismiss="alert"
                 aria-hidden="true">&times;</button>
-        <strong>{{ session('status') }}</strong> Create another location below or <a href="{{ route('location.index') }}">Click Here</a> to view all the locations
+        <strong>{{ session('status') }}</strong> Create another location below or <a href="{{ route('dashboard.locations.index') }}">Click Here</a> to view all the locations
     </div>
     @endif
 

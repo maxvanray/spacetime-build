@@ -340,7 +340,9 @@
 <!-- horizontal menu ends -->
 <div class="wrapper row-offcanvas row-offcanvas-left">
     @include('layouts.menu.leftmenu')
+
     <aside class="right-side">
+        @include ('layouts.alerts.alerts')
         <!-- Content -->
         @yield('content')
     </aside>

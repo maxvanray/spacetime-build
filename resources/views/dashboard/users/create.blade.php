@@ -1,4 +1,4 @@
-@extends('layouts/default')
+@extends('layouts.default')
 
 {{-- Page title --}}
 @section('title')
@@ -34,10 +34,10 @@
                 </a>
             </li>
             <li>
-                <a href="#"> Users</a>
+                <a href="{{route('dashboard.users.index')}}"> Users</a>
             </li>
             <li class="active">
-                Add New User
+                <a href="#"> Add New User</a>
             </li>
         </ol>
     </section>
@@ -45,20 +45,42 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="livicon" data-name="user-add" data-size="18" data-c="#fff" data-hc="#fff"
-                               data-loop="true"></i> Add New User
-                        </h3>
-                        <span class="pull-right">
-                                    <i class="fa fa-fw fa-chevron-up clickable"></i>
-                                </span>
-                    </div>
-                    <div class="panel-body">
-                          @include('layouts.forms.new_user')
-                    </div>
+                {{ Form::open(array('route' => 'dashboard.users.store')) }}
+
+                <div class="form-group">
+                    {{ Form::label('name', 'Name') }}
+                    {{ Form::text('name', '', array('class' => 'form-control')) }}
                 </div>
+
+                <div class="form-group">
+                    {{ Form::label('email', 'Email') }}
+                    {{ Form::email('email', '', array('class' => 'form-control')) }}
+                </div>
+
+                <div class='form-group'>
+                    @foreach ($roles as $role)
+                        {{ Form::checkbox('roles[]',  $role->id ) }}
+                        {{ Form::label($role->name, ucfirst($role->name)) }}<br>
+
+                    @endforeach
+                </div>
+
+                <div class="form-group">
+                    {{ Form::label('password', 'Password') }}<br>
+                    {{ Form::password('password', array('class' => 'form-control')) }}
+
+                </div>
+
+                <div class="form-group">
+                    {{ Form::label('password', 'Confirm Password') }}<br>
+                    {{ Form::password('password_confirmation', array('class' => 'form-control')) }}
+
+                </div>
+
+                {{ Form::submit('Add', array('class' => 'btn btn-primary')) }}
+
+                {{ Form::close() }}
+
             </div>
         </div>
         <!--row end-->

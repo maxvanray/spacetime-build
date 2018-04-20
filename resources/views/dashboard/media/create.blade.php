@@ -1,4 +1,4 @@
-@extends('layouts/default')
+@extends('layouts.default')
 
 {{-- Page title --}}
 @section('title')
@@ -32,7 +32,14 @@
                     </a>
                 </li>
                 <li class="active">
+                    <a href="{{route('dashboard.images.index')}}">
+                        Media Library
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="{{route('dashboard.images.create')}}">
                     Add Media
+                    </a>
                 </li>
             </ol>
         </section>
@@ -40,7 +47,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    {!! Form::open(['route' => 'media.post', 'files' => true, 'id' => 'media']) !!}
+                    {!! Form::open(['route' => 'dashboard.images.store', 'files' => true, 'id' => 'media']) !!}
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="name">
@@ -48,8 +55,7 @@
                             <span class="text-danger">*</span>
                         </label>
                         <div class="col-md-6">
-                            <input type="text" id="name" name="name" class="form-control"
-                                   placeholder="Enter a name">
+                            <input id="name" class="form-control" name="name" placeholder="Enter a name" type="text">
                         </div>
                     </div>
 
@@ -66,11 +72,11 @@
 
                     <div class="form-group">
                         <div class="col-md-4">
-                            <label class="control-label">Categories:</label>
+                            <label class="control-label">Key Words:</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" name="categories" id="categories" class="demo-default" value="image">
-                            <p>Add Category tags to help make the images searchable.</p>
+                            <input type="text" name="categories" id="categories" class="demo-default">
+                            <p>Add Key Words to help make the images searchable.</p>
                         </div>
                     </div>
                     <div class="form-group">
