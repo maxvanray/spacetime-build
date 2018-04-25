@@ -64,8 +64,6 @@ class CreateLocationsTable extends Migration
             $table->string('saturday_notes')->nullable();
             $table->string('closed_saturday')->nullable();
 
-            $table->string('images')->nullable();
-
             $table->integer('created_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')->on('users');
 

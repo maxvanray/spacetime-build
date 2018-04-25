@@ -38,7 +38,6 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     
@@ -154,7 +153,7 @@
                                     <div id="sidebar_modal" class="modal fade animated" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <form class="location_images">
+                                                {{ Form::model($location, array('class' => 'location_images', 'route' => array('dashboard.locations.update', $location->id), 'method' => 'PUT')) }}
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         <h4 class="modal-title">Media Library</h4>
@@ -162,32 +161,30 @@
                                                     <div class="modal-body">
                                                         <div class="row">
 
-                                                        @if(count($media)<1)
+                                                        @if(!count($images)>0)
                                                             <div class="col-md-6">
                                                                 <h3>No Media</h3>
                                                             </div>
                                                         @else
-                                                            @foreach($media as $m)
-                                                                @php
-                                                                    $media_id = $m->id;
-                                                                @endphp
+                                                            @foreach($images as $img)
+
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>
-                                                                            <input type="checkbox" name="image[]" value="{{$m->id}}"
-                                                                                   @if( in_array($media_id, $used_images) )
+                                                                            <input type="checkbox" name="image[]" value="{{$img['id']}}"
+                                                                                   @if( in_array($img['id'], (array) $location->images) )
                                                                                    checked
                                                                                     @endif
-                                                                            > {{$m->name}}
+                                                                            > {{$img['name']}}
                                                                         </label>
 
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <img class="img-responsive" src="{{url($m->location)}}/{{ $m->filename }}" class="img-responsive" style="padding: 5px" title="{{ $m->name }}">
+
+                                                                    <img class="img-responsive" src="{{url($img['location'])}}/{{ $img['filename'] }}" class="img-responsive" alt="{{ $img['name'] }}" title="{{ $img['name'] }}">
                                                                 </div>
                                                             @endforeach
-
 
                                                         @endif
                                                         </div>
@@ -201,20 +198,22 @@
                                                         <a href="{{route('dashboard.images.create')}}" class="btn btn-danger">New</a>
                                                     </div>
 
-                                                </form>
+                                                {{ Form::close() }}
                                         </div>
                                     </div>
                                 </div>
 
                             </td>
                             <td class="table_superuser">
-                                @if( count($images)>0 )
-                                    <h6>No Images</h6>
-                                @else
-                                    @foreach( $images as $image)
-                                        <img src="{{url($image->location)}}/{{ $image->filename }}" class="img-responsive" style="padding: 5px">
+                                <div class="row">
+                                    @foreach( $location->images as $image)
+                                    <div class="col-xs-6 col-md-3">
+                                        <a href="#" class="thumbnail">
+                                            <img src="{{url($image->location)}}/{{ $image->filename }}" class="img-responsive" alt="{{ $image->name }}" style="padding: 5px">
+                                        </a>
+                                    </div>
                                     @endforeach
-                                @endif
+                                </div>
                             </td>
                         </tr>
 

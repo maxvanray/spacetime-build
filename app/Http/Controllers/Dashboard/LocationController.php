@@ -122,7 +122,9 @@ class LocationController extends Controller
 
         $location->save();
 
-        return back()->withInput()->with('status', 'Location Created!');
+        return redirect()->route('dashboard.locations.index') ->with('flash_message',
+            'Location ' . $location->name . ' created!');
+
     }
 
     /**
@@ -158,23 +160,22 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        $media = Media::where('active', '=', '1')->get();
 
-        $images = [];
-        $image_keys[] = json_decode($location->images);
-        if(!empty($image_keys)){
-            foreach ($image_keys as $k) {
-                $images[] = Media::find($k);
-            }
-        }
-        $location['images_full'] = $image_keys;
+        //return $location->images()->get();
 
-        return view('dashboard.locations.edit', [
-            'location' => $location,
-            'media' => $media,
-            'used_images' => $image_keys,
-            'images' => $images
-        ]);
+//        $media = Images::where('active', '=', '1')->get();
+//
+//        $images = [];
+//        $image_keys[] = json_decode($location->images);
+//        if(!empty($image_keys)){
+//            foreach ($image_keys as $k) {
+//                $images[] = Media::find($k);
+//            }
+//        }
+//        $location['images_full'] = $image_keys;
+
+        return view('dashboard.locations.edit')->with(compact('location'));
+
     }
 
     /**
@@ -263,14 +264,12 @@ class LocationController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        $location = Location::findOrFail($id);
-        if ($request->ajax()) {
+        $location = Location::find($id);
+        $location->delete($request->all());
+        return redirect()->route('dashboard.locations.index') ->with('flash_message',
+            'Location ' . $location->name . ' deleted!');
 
-            $location->delete($request->all());
-
-            return response(['msg' => 'Location deleted', 'status' => 'success']);
-        }
-        return response(['msg' => 'Failed deleting the location', 'status' => 'failed']);
+        //return response(['msg' => 'Failed deleting the location', 'status' => 'failed']);
 
         //Location::find($id)->delete();
         //return redirect()->route('location.index')

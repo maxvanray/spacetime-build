@@ -38,7 +38,9 @@ Route::group([
 
     Route::resource('calendars', 'CalendarController', ['as'=>'dashboard']);
 
-    Route::resource('media/images', 'MediaController', ['as'=>'dashboard']);
+    //Route::resource('media/images', 'MediaController', ['as'=>'dashboard']);
+
+    Route::resource('images', 'ImageController', ['as'=>'dashboard']);
 
 
 

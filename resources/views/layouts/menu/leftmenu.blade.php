@@ -5,6 +5,8 @@
     if(empty($routeparams)){
         $routeparams = 1;
     }
+
+    //TODO: Replace PHP Comments with laravel comments
 ?>
 
 <!-- Left side column. contains the logo and sidebar -->
@@ -176,11 +178,11 @@
                     </ul>
                 </li>
 
-                <?php // MEDIA ?>
+                <?php // IMAGES ?>
                 <li {!! ($routename===('dashboard.images.index')||$routename===('dashboard.images.create')? 'class="active"':"") !!}>
                     <a href="#">
                         <i class="menu-icon fa fa-fw fa-camera"></i>
-                        <span>Media</span> <span
+                        <span>Images</span> <span
                                 class="fa arrow"></span>
                     </a>
                     <ul class="sub-menu">

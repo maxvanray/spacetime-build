@@ -106,7 +106,7 @@
                                 'method' => 'DELETE',
                                 'id' => 'formDelete',
                                 'data-location' => '0',
-                                'data-dismiss' => 'modal',
+
                                 ]) !!}
                                 {!! Form::button( '
                                         <span class="glyphicon glyphicon-ok-sign confirm"></span> Yes',
@@ -133,7 +133,7 @@
 <script type="text/javascript" src="{{asset('assets/js/custom_js/datatables_custom.js')}}"></script>
 <script type="text/javascript">
     $('.deleteBtn').on('click', function(event){
-        $('#formDelete').data('location', $(this).data('id'));
+        $('#formDelete').attr("data-location", $(this).data('id'));
         $('#formDelete').attr("action", $(this).data('url'));
         $('#confirm').text('Are you sure you want to delete '+ $(this).data('name') +'?');
     });

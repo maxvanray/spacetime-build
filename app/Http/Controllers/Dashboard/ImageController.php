@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Image;
 use App\Event;
 use Auth;
 use App\Media;
@@ -11,13 +12,10 @@ use File;
 use Storage;
 use Validator;
 use DB;
-//use Intervention\Image\Facades\Image;
-use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManagerStatic as InterventionImage;
 
-
-class MediaController extends Controller
+class ImageController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -25,10 +23,10 @@ class MediaController extends Controller
      */
     public function index()
     {
-        $media = Media::all();
+        $images = Image::all();
 
         $media_categories = '';
-        foreach ($media as $m) {
+        foreach ($images as $m) {
             $media_categories .= ',' . $m->categories;
         }
         $media_categories = str_replace("-", " ", $media_categories);
@@ -46,10 +44,10 @@ class MediaController extends Controller
         $events = Event::all();
 
 
-        return view('dashboard.media.index', [
+        return view('dashboard.images.index', [
             'clean_categories' => $clean_categories,
             'categories' => $categories,
-            'media' => $media,
+            'images' => $images,
             'user' => $user,
             'events' => $events
         ]);
@@ -62,12 +60,12 @@ class MediaController extends Controller
      */
     public function create()
     {
-        $media = Media::all();
+        $images = Image::all();
         $user = Auth::user();
         $events = Event::all();
 
-        return view('dashboard.media.create', [
-            'media' => $media,
+        return view('dashboard.images.create', [
+            'images' => $images,
             'user' => $user,
             'events' => $events
         ]);
@@ -76,76 +74,81 @@ class MediaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $media = "";
-
-        $user = Auth::user();
-
         if ($request->hasFile('image')) {
-            $categories = $request->categories;
+            $user = Auth::user();
             $destination_path = 'media_library';
-            $file = $request->file('media');
+            $file = $request->file('image');
             $extension = strtolower($file->getClientOriginalExtension());
             $filename_original = $file->getClientOriginalName();
             $mime_type = $file->getClientMimeType();
             $filename = $user->id . '-' . uniqid() . '.' . $extension;
-
-            $img = Image::make($file->getRealPath());
-
+            $img = InterventionImage::make($file->getRealPath());
             $img->resize(300, 300, function ($constraint) {
                 $constraint->aspectRatio();
             })->save(public_path('/' . $destination_path) . '/' . $filename);
-
-            $media_item = new Media;
+            $media_item = new Image;
             $media_item->name = $request->name;
-            $media_item->description = $request->description;
+            $media_item->filename_original = $filename_original;
             $media_item->filename = $filename;
-            $media_item->location = $destination_path;
-            $media_item->active = 1;
             $media_item->type = $mime_type;
+            $media_item->description = $request->description;
+            $media_item->active = 1;
+            $media_item->location = $destination_path;
             $media_item->created_by = $user->id;
             $media_item->save();
-
+            return redirect(route('dashboard.images.index'))->with('status', 'Success');
+        }else{
+            return redirect(route('dashboard.images.index'))->with('erroe', 'An image was not recorded.');
         }
 
-        return redirect(route('dashboard.images.index'))->with('status', 'Success');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Image $image)
     {
-        //
+        $images = Image::all();
+        $user = Auth::user();
+        $events = Event::all();
+
+        return view('dashboard.images.edit', [
+            'image' => $image,
+            'images' => $images,
+            'user' => $user,
+            'events' => $events
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -156,25 +159,11 @@ class MediaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $image = Media::findOrFail($id);
-        $image->delete();
-
-        return redirect()->route('dashboard.images.index')
-            ->with('flash_message',
-                $image->name.' successfully deleted.');
-    }
-
-    protected function replaceAll($text)
-    {
-        $text = strtolower(htmlentities($text));
-        $text = str_replace(get_html_translation_table(), "-", $text);
-        $text = str_replace(" ", "-", $text);
-        $text = preg_replace("/[-]+/i", "-", $text);
-        return $text;
+        //
     }
 }
