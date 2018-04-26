@@ -161,19 +161,6 @@ class LocationController extends Controller
     public function edit(Location $location)
     {
 
-        //return $location->images()->get();
-
-//        $media = Images::where('active', '=', '1')->get();
-//
-//        $images = [];
-//        $image_keys[] = json_decode($location->images);
-//        if(!empty($image_keys)){
-//            foreach ($image_keys as $k) {
-//                $images[] = Media::find($k);
-//            }
-//        }
-//        $location['images_full'] = $image_keys;
-
         return view('dashboard.locations.edit')->with(compact('location'));
 
     }
@@ -206,8 +193,7 @@ class LocationController extends Controller
     public function updateImages(Request $request, Location $location)
     {
         $images = $request->input('image.*');
-        $location->images = json_encode($images);
-        $location->save();
+        $location->images()->sync($images);
         return $images;
     }
 

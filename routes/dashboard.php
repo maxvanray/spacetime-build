@@ -34,7 +34,7 @@ Route::group([
     Route::resource('events', 'EventController', ['as'=>'dashboard']);
 
     Route::resource('locations', 'LocationController', ['as'=>'dashboard']);
-    Route::post('locations/{id}/images', 'LocationController@updateImages')->name('dashboard.location.images.update');
+    Route::put('locations/{location}/images', 'LocationController@updateImages')->name('dashboard.location.images.update');
 
     Route::resource('calendars', 'CalendarController', ['as'=>'dashboard']);
 

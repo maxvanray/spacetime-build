@@ -12,7 +12,7 @@ class ImagesComposer
      *
      * @var App/Image
      */
-    protected $images;
+    protected $allImages;
 
     /**
      * Create a new profile composer.
@@ -20,10 +20,10 @@ class ImagesComposer
      * @param  Image  $images
      * @return void
      */
-    public function __construct(Image $images)
+    public function __construct(Image $allImages)
     {
         // Dependencies automatically resolved by service container...
-        $this->images = Image::all();
+        $this->allImages = Image::all();
     }
 
     /**
@@ -34,6 +34,6 @@ class ImagesComposer
      */
     public function compose(View $view)
     {
-        $view->with('images', $this->images->toArray());
+        $view->with('allImages', $this->allImages);
     }
 }
