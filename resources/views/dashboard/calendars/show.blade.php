@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Calendar
+    {{$location->name}} Calendar
     @parent
 @stop
 

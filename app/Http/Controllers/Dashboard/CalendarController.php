@@ -24,7 +24,7 @@ class CalendarController extends Controller
         $events = Event::all();
         $locations = Location::all();
 
-        return view('dashboard/calendar', [
+        return view('dashboard.calendar.index', [
             'user' => $user,
             'events' => $events,
             'locations' => $locations
@@ -70,9 +70,7 @@ class CalendarController extends Controller
      */
     public function store(Request $request)
     {
-
         $input = $request->all();
-
         $event_id = $input['event'];
         $user = Auth::user();
         $event = Event::find($event_id);
@@ -88,12 +86,8 @@ class CalendarController extends Controller
         $calendar->background_color = $input['backgroundColor'];
         $calendar->start = $input['date'];
         $calendar->all_day = $input['all_day'];
-
-
         $calendar->save();
-
         return $calendar;
-
     }
 
     /**

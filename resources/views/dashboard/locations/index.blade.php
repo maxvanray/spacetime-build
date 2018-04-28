@@ -40,7 +40,8 @@
                             <table id="datatable" class="table table-striped table-bordered table-hover" width="100%" border="0" cellspacing="0" cellpadding="0" summary="This is a list of the locations.">
                                 <thead>
                                   <tr>
-                                    <th>Location Name</th>
+                                    <th></th>
+                                    <th>Name</th>
                                     <th>Address</th>
                                     <th>Description</th>
                                     <th>Contact</th>
@@ -52,13 +53,20 @@
                                 <tbody>
                                    @foreach($locations as $location)
                                     <tr>
+                                        <td>
+                                            @foreach($location->images as $image)
+                                                <div class="form-group ">
+                                                <img class="img-responsive img-thumbnail" src="{{ url('/') }}/{{ $image->location.'/'.$image->filename }}" title="{{$image->name}}" style="max-height: 30px;">
+                                                </div>
+                                            @endforeach
+                                        </td>
                                         <td class="locationName">{{ $location->name }}</td>
                                         <td class="locationAddress">{{ $location->address }}</td>
                                         <td class="locationDescription">{{ $location->description }}</td>
                                         <td class="locationContact"
                                             data-locationcontact="{{ $location->contact }}"
                                             data-locationemail="{{ $location->email }}"
-                                            >{{ $location->contact }} {{ $location->email }}</td>
+                                            ><strong>{{ $location->contact }}</strong> {{ $location->email }}</td>
                                         <td></td>
                                         <td class="locationActive">{{ $location->active }}</td>
                                         <td class="locationEdit" data-location="{{ $location->id }}">

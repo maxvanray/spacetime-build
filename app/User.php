@@ -42,7 +42,6 @@ class User extends Authenticatable
      */
     public function attributes()
     {
-
         return $this->hasOne('App\UserAttribute');
     }
 }

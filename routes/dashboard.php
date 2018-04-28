@@ -37,10 +37,16 @@ Route::group([
     Route::put('locations/{location}/images', 'LocationController@updateImages')->name('dashboard.location.images.update');
 
     Route::resource('calendars', 'CalendarController', ['as'=>'dashboard']);
+    Route::post('/calendarlist', 'CalendarController@store');
+    Route::get('/calendarlist/{location}', 'CalendarController@calendarList');
 
     //Route::resource('media/images', 'MediaController', ['as'=>'dashboard']);
 
     Route::resource('images', 'ImageController', ['as'=>'dashboard']);
+
+    Route::resource('profile', 'ProfileController', ['as'=>'dashboard']);
+
+
 
 
 
@@ -55,18 +61,17 @@ Route::group([
     //Route::post('/add-user', 'UserController@store')->name('adduser_post');
     //Route::get('/edit-user', 'UserController@store')->name('edit_user.store');
     //Route::get('/profile', 'UserController@profile')->name('profile.index');
-    Route::get('/profile', 'UserController@profile')->name('profile');
+    //Route::get('/profile', 'UserController@profile')->name('profile');
     Route::get('/profile/{id}', 'UserController@profile')->name('profile.id');
 
     // Calendar
     //Route::get('/calendar', 'CalendarController@index')->name('calendar');
     Route::get('/calendar/{location_id}', 'CalendarController@locationCalendar')->name('calendar.location');
-    //Route::post('/calendar', 'CalendarController@store')->name('calendar.post');
+    Route::post('/calendar', 'CalendarController@store')->name('calendar.post');
     //Route::post('/calendar/update', 'CalendarController@update')->name('calendar.update');
 
     //Route::get('/calendarlist', 'CalendarController@calendarList');
-    Route::get('/calendarlist/{location}', 'CalendarController@calendarList');
-    Route::post('/calendarlist', 'CalendarController@store');
+
 
     //Media
     //Route::get('/media', 'MediaController@index')->name('media.index');

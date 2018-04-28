@@ -87,8 +87,6 @@ $(document).ready(function () {
                         location.reload();
                     }
                 });
-                // var m = date.moment();
-                // console.log(m);
                 // is the "remove after drop" checkbox checked?
                 if ($('#drop-remove').is(':checked')) {
                     // if so, remove the element from the "Draggable Events" list
@@ -96,30 +94,11 @@ $(document).ready(function () {
                 }
             },
             eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
-
-                /*--------
-                    alert(
-                        " id " + event.id + " " +
-                        event.title + " was moved " +
-                        delta._days + " days and " +
-                        delta._milliseconds + " minutes."
-                    );
-                */
                 if (event.allDay) {
                     toastr["success"](event.title + " is now all-day", event.title);
                 } else {
                     toastr["success"](event.title + " has a time-of-day", event.title);
                 }
-                //--------
-                //     if (!confirm("Are you sure about this change?")) {
-                //         revertFunc();
-                //     }
-                //--------
-                // var calender_id = event.id;
-                // var all_day = event.allDay;
-                // var start = event.start.format();
-
-
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

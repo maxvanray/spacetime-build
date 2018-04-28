@@ -27,7 +27,7 @@
                         </h4>
                         <ul class="icon-list">
                             <li>
-                                <a href="{{ @route('profile') }} ">
+                                <a href="{{ @route('dashboard.profile.index') }} ">
                                     <i class="fa fa-fw fa-user"></i>
                                 </a>
                             </li>
@@ -37,7 +37,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ @route('profile') }} ">
+                                <a href="{{ @route('dashboard.profile.index') }} ">
                                     <i class="fa fa-fw fa-gear"></i>
                                 </a>
                             </li>
@@ -82,7 +82,7 @@
                 $routename===('dashboard.users.create')||
                 $routename===('dashboard.users.show')||
                 $routename===('dashboard.users.edit')||
-                $routename===('profile')? 'class="active"':""
+                $routename===('dashboard.profile.index')? 'class="active"':""
                 )
                 !!}>
                     <a href="#">
@@ -110,9 +110,9 @@
                             </a>
                         </li>
 
-                        <li {!! ($routename===('profile')? 'class="active"':"") !!}>
-                            <a href="{{ @route('profile') }} ">
-                                <i class="fa fa-fw fa-user-md"></i> View Profile
+                        <li {!! ($routename===('dashboard.profile.index')? 'class="active"':"") !!}>
+                            <a href="{{ @route('dashboard.profile.index') }} ">
+                                <i class="fa fa-fw fa-user-md"></i> User Profile
                             </a>
                         </li>
                     </ul>

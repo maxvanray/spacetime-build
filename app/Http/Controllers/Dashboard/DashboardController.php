@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Event;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -17,11 +18,16 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $user = User::find(1);
+
+        $user = Auth::user();
         $events = Event::all();
         $locations = Location::all();
 
-        return view('dashboard/dash', ['user' => $user, 'events' => $events, 'locations' => $locations]);
+        return view('dashboard.dashboard.index', [
+            'user' => $user,
+            'events' => $events,
+            'locations' => $locations
+        ]);
     }
 
     /**

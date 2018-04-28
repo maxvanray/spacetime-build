@@ -307,11 +307,11 @@
                                 @endauth</p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="p-t-3"><a href="{{ @route('profile') }}"> <i class="fa fa-fw fa-user"></i> My
+                        <li class="p-t-3"><a href="{{ @route('dashboard.profile.index') }}"> <i class="fa fa-fw fa-user"></i> My
                                 Profile </a>
                         </li>
                         <li role="presentation"></li>
-                        <li><a href="{{ route('profile') }}"> <i class="fa fa-fw fa-gear"></i> Account Settings
+                        <li><a href="{{ route('dashboard.profile.index') }}"> <i class="fa fa-fw fa-gear"></i> Account Settings
                             </a></li>
                         <li role="presentation" class="divider"></li>
                         <!-- Menu Footer-->

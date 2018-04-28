@@ -50,22 +50,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function profile(Request $request, $id = '')
-    {
-        if (empty($id)) {
-            $id = Auth::id();
-        }
-        //$user = User::find(1);
-        //$user = Auth::user();
-        $user = User::find($id);
-        $guests = User::get();
-
-        return view('dashboard.users.profile', [
-            'user' => $user,
-            'guests' => $guests
-        ]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
